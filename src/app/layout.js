@@ -1,14 +1,16 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Brygada_1918, Great_Vibes } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const geistPrimary = Brygada_1918({
+  variable: "--font-brygada-1918",
   subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const geistSecondary = Great_Vibes({
+  variable: "--font-great-vibes",
   subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata = {
@@ -20,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistPrimary.variable} ${geistSecondary.variable} antialiased`}
       >
         {children}
       </body>

@@ -8,8 +8,8 @@
   --color-foreground: var(--foreground);
   --color-bg-up: var(--background-up);
   --color-bg-down: var(--background-down);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-primary: var(--font-brygada-1918);
+  --font-secondary: var(--font-great-vibes);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -50,15 +50,15 @@
 
 :root {
   --radius: 0.625rem;
-  --background-up: #000000; 
-  --background-down:  #4D0C3E; 
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
+  --background-up: #000000;
+  --background-down: #4d0c3e;
+  --foreground: #d5c4a6;
+  --card: #4d0c3e;
+  --card-foreground: #d5c4a6;
+  --popover: #d5c4a6;
+  --popover-foreground: #4d0c3e;
+  --primary: #4d0c3e;
+  --primary-foreground: #d5c4a6;
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
@@ -66,16 +66,16 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
+  --border: #fadb4e;
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --ring: #4d0c3e;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar: #4d0c3e;
+  --sidebar-foreground: #d5c4a6;
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
@@ -116,7 +116,6 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -124,4 +123,61 @@
   body {
     @apply bg-linear-to-b from-bg-up to-bg-down bg-fixed min-h-screen text-foreground;
   }
+}
+.h1general{
+  @apply text-white font-primary
+}
+.h1reviews{
+  @apply text-primary font-primary text-4xl
+}
+.h2mainhero{
+  @apply text-foreground font-primary text-4xl
+}
+.h2mainemail{
+  @apply text-black font-primary text-3xl lg:text-4xl
+}
+.h3category{
+  @apply text-white font-primary text-2xl
+}
+.h3footer{
+  @apply text-foreground font-primary text-3xl
+}
+.p1{
+  @apply text-foreground font-primary
+}
+.p2{
+  @apply text-foreground font-secondary 
+}
+.buttongeneral{
+  @apply text-foreground font-secondary text-3xl
+}
+.buttoncategory1{
+  @apply text-white font-primary text-2xl
+}
+.buttoncategory2{
+  @apply text-primary font-primary text-2xl
+}
+.cardh1{
+  @apply text-foreground font-secondary text-base lg:text-2xl
+}
+.product{
+  @apply text-foreground font-secondary text-3xl lg:text-4xl 
+}
+.productinfoh1{
+  @apply text-white font-primary text-base lg:text-2xl
+}
+.productinfop{
+  @apply text-white font-primary text-[10px] lg:text-sm
+}
+.reviewuser{
+  @apply text-foreground font-secondary text-3xl lg:text-2xl
+}
+.placeholderreview{
+  @apply text-foreground font-secondary text-2xl lg:text-xl
+}
+.placeholderemail{
+  @apply text-input font-primary text-base
+}
+.navtext{
+  @apply text-foreground font-primary text-base
 }
