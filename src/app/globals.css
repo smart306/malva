@@ -4,8 +4,6 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --color-bg-up: var(--background-up);
   --color-bg-down: var(--background-down);
   --font-primary: var(--font-brygada-1918);
@@ -16,8 +14,6 @@
   --color-sidebar-accent: var(--sidebar-accent);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -26,19 +22,14 @@
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
+  --color-border-nav: var(--border-nav); 
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -52,14 +43,8 @@
   --radius: 0.625rem;
   --background-up: #000000;
   --background-down: #4d0c3e;
-  --foreground: #d5c4a6;
-  --card: #4d0c3e;
-  --card-foreground: #d5c4a6;
-  --popover: #d5c4a6;
-  --popover-foreground: #4d0c3e;
   --primary: #4d0c3e;
-  --primary-foreground: #d5c4a6;
-  --secondary: oklch(0.97 0 0);
+  --secondary: #d5c4a6;
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
@@ -67,6 +52,7 @@
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: #fadb4e;
+  --border-nav: #ECA2D6; 
   --input: oklch(0.922 0 0);
   --ring: #4d0c3e;
   --chart-1: oklch(0.646 0.222 41.116);
@@ -74,8 +60,6 @@
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: #4d0c3e;
-  --sidebar-foreground: #d5c4a6;
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
@@ -121,63 +105,60 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-linear-to-b from-bg-up to-bg-down bg-fixed min-h-screen text-foreground;
+    @apply bg-linear-to-b from-bg-up to-bg-down bg-fixed min-h-screen text-secondary;
   }
 }
-.h1general{
-  @apply text-white font-primary
+@utility my-container{
+  @apply max-w-365.5 px-4 mx-auto;
 }
-.h1reviews{
-  @apply text-primary font-primary text-4xl
+@utility my-grid{
+  @apply grid grid-cols-2 md:grid-cols-6 lg:grid-cols-12 gap-x-5 gap-y-5;
 }
-.h2mainhero{
-  @apply text-foreground font-primary text-4xl
+@utility my-transition{
+  @apply transition-all duration-500 ease-in-out 
 }
-.h2mainemail{
-  @apply text-black font-primary text-3xl lg:text-4xl
+@utility h1{
+  @apply font-primary text-4xl leading-[1.2]!;
 }
-.h3category{
-  @apply text-white font-primary text-2xl
+@utility h2{
+  @apply font-primary text-3xl lg:text-4xl leading-[1.2]!;
 }
-.h3footer{
-  @apply text-foreground font-primary text-3xl
+@utility h3{
+  @apply font-primary text-2xl leading-[1.2]!;
 }
-.p1{
-  @apply text-foreground font-primary
+@utility h4{
+  @apply font-primary text-3xl leading-[1.2]!;
 }
-.p2{
-  @apply text-foreground font-secondary 
+@utility p{
+  @apply text-base leading-[1.2]!;
 }
-.buttongeneral{
-  @apply text-foreground font-secondary text-3xl
+@utility buttongeneral{
+  @apply font-secondary text-3xl leading-[1.2]!;
 }
-.buttoncategory1{
-  @apply text-white font-primary text-2xl
+@utility buttoncategory{
+  @apply font-primary text-2xl leading-[1.2]!;
 }
-.buttoncategory2{
-  @apply text-primary font-primary text-2xl
+@utility cardh1{
+  @apply font-secondary text-base lg:text-2xl leading-[1.2]!;
 }
-.cardh1{
-  @apply text-foreground font-secondary text-base lg:text-2xl
+@utility product{
+  @apply font-secondary text-3xl lg:text-4xl leading-[1.2]!;
 }
-.product{
-  @apply text-foreground font-secondary text-3xl lg:text-4xl 
+@utility productinfoh1{
+  @apply font-primary text-base lg:text-2xl leading-[1.2]!;
 }
-.productinfoh1{
-  @apply text-white font-primary text-base lg:text-2xl
+@utility productinfop{
+  @apply font-primary text-[10px] lg:text-sm leading-[1.2]!;
 }
-.productinfop{
-  @apply text-white font-primary text-[10px] lg:text-sm
+@utility reviewuser{
+  @apply font-secondary text-3xl lg:text-2xl leading-[1.2]!;
 }
-.reviewuser{
-  @apply text-foreground font-secondary text-3xl lg:text-2xl
+@utility placeholderreview{
+  @apply font-secondary text-2xl lg:text-xl leading-[1.2]!;
 }
-.placeholderreview{
-  @apply text-foreground font-secondary text-2xl lg:text-xl
+@utility placeholderemail{
+  @apply font-primary text-base leading-[1.2]!; 
 }
-.placeholderemail{
-  @apply text-input font-primary text-base
-}
-.navtext{
-  @apply text-foreground font-primary text-base
+@utility navtext{
+  @apply font-primary text-base leading-[1.2]!; 
 }

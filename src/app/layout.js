@@ -1,5 +1,6 @@
 import { Brygada_1918, Great_Vibes } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/nav";
 
 const geistPrimary = Brygada_1918({
   variable: "--font-brygada-1918",
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistPrimary.variable} ${geistSecondary.variable} antialiased`}
       >
+        <Navbar/>
         {children}
       </body>
     </html>

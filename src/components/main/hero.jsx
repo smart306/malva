@@ -1,7 +1,8 @@
 "use client"
+
 export default function Header(){
     return(
-        <div>
+        <div className="my-container pt-50">
             <div>
                 
             </div>
