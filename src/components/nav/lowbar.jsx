@@ -1,11 +1,29 @@
 "use client";
 
 import Image from "next/image";
-import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from "../ui/navigation-menu";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+} from "../ui/navigation-menu";
 import { Input } from "../ui/input";
-import { AlignJustify, Heart, Search, ShoppingBasket, UserRound, XIcon } from "lucide-react";
+import {
+  AlignJustify,
+  Heart,
+  Search,
+  ShoppingBasket,
+  UserRound,
+  XIcon,
+} from "lucide-react";
 import { Button } from "../ui/button";
-import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet";
 import { Separator } from "../ui/separator";
 import TopBar from "./topbar";
 
@@ -19,27 +37,27 @@ const data = [
     image: <UserRound width={24} height={24} />,
   },
   {
-    title: "Пошук",
+    title: "Кошик",
     image: <ShoppingBasket width={24} height={24} />,
   },
   {
-    title: "Пошук",
+    title: "Вподобані",
     image: <Heart width={24} height={24} />,
   },
 ];
 export default function Lowbar() {
   return (
-    <div className="fixed w-full">
-      <NavigationMenu>
-        <div className="my-container w-full bg-primary rounded-full border-[3px] border-border-nav py-2 px-4">
-          <NavigationMenuList className="hidden w-full lg:flex flex-row justify-between">
+    <NavigationMenu className="fixed w-full">
+      <div className="my-container w-full ">
+        <div className="bg-primary rounded-full border-[3px] border-border-nav py-2 px-4">
+          <NavigationMenuList className="hidden w-full lg:flex flex-row justify-between ">
             <div className="flex flex-row items-center w-full gap-4">
               <NavigationMenuItem className="cursor-pointer">
                 <Image src="/image1.svg" alt="p" width={40} height={40} />
               </NavigationMenuItem>
               <NavigationMenuItem className="max-w-200 w-full flex gap-2 cursor-pointer my-transition">
                 <Input placeholder="Пошук..." className="w-full" />
-                <Search/>
+                <Search />
               </NavigationMenuItem>
             </div>
             <div className="flex gap-2">
@@ -73,7 +91,7 @@ export default function Lowbar() {
                 </Button>
               </SheetTrigger>
               <SheetContent
-                side="left"
+                side="right"
                 className="w-full bg-primary text-secondary my-container py-4 px-2"
               >
                 <SheetHeader className="flex flex-row items-center justify-end">
@@ -86,7 +104,7 @@ export default function Lowbar() {
                 <div className="flex flex-col gap-2 py-2">
                   {data.map((item, i) => (
                     <div
-                      key={i}
+                      key={item.title}
                       className="flex flex-row justify-end items-center gap-2 px-4 py-2"
                     >
                       <Button variant="ghost">
@@ -102,7 +120,7 @@ export default function Lowbar() {
             </Sheet>
           </NavigationMenuList>
         </div>
-      </NavigationMenu>
-    </div>
+      </div>
+    </NavigationMenu>
   );
 }
