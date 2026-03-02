@@ -15,19 +15,19 @@ const buttonVariants = cva(
           "bg-transparent font-primary text-white hover:text-primary my-transition cursor-pointer",
         category2:
           "bg-transparent cursor-pointer font-primary text-primary hover:text-white my-transition hover:[text-shadow:0_0_10px_rgba(77, 12, 62, 1);,0_0_25px_rgba(77, 12, 62, 1);,0_0_45px_rgba(77, 12, 62, 1);]",
-        card: "bg-border rounded-full",
+        card: "bg-border text-primary rounded-full hover:bg-primary hover:text-border hover:border hover:border-border my-transition",
         secondary:
           "bg-secondary text-primary font-secondary border border-primary my-transition hover:bg-primary hover:text-secondary hover:border-secondary cursor-pointer",
         ghost: "bg-transparent my-transition cursor-pointer",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "w-fit px-4 py-1 text-center items-center has-[>svg]:px-3",
+        default: "w-fit text-center items-center",
         xs: "h-6 gap-1 rounded-md px-2 text-xs has-[>svg]:px-1.5 [&_svg:not([class*='size-'])]:size-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         ghostsize: "w-full h-full",
-        icon: "size-9",
+        icon: "size-",
         "icon-xs": "size-6 rounded-md [&_svg:not([class*='size-'])]:size-3",
         "icon-sm": "size-8",
         "icon-lg": "size-10",

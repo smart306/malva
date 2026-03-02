@@ -39,7 +39,7 @@ const data = [
 ];
 export default function TopBar() {
   return (
-    <NavigationMenu className="bg-primary w-full [&_div]:!w-full overflow-hidden max-lg:items-start px-4">
+    <NavigationMenu className=" bg-primary w-full [&_div]:!w-full overflow-hidden max-lg:items-start px-4">
       <NavigationMenuList className="w-full! flex-col lg:flex-row gap-2 lg:gap-6 max-lg:py-4">
         <Carousel
           className={"w-full"}

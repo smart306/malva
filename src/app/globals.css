@@ -22,6 +22,7 @@
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
+  --color-linear: var(--linear); 
   --color-border-nav: var(--border-nav); 
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
@@ -55,6 +56,7 @@
   --border-nav: #ECA2D6; 
   --input: oklch(0.922 0 0);
   --ring: #4d0c3e;
+  --linear: #0f020c;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);

@@ -109,7 +109,7 @@ function CarouselContent({
   return (
     <div
       ref={carouselRef}
-      className="overflow-hidden"
+      className="overflow-visible"
       data-slot="carousel-content">
       <div
         className={cn(

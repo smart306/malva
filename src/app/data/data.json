@@ -1,0 +1,52 @@
+{ 
+    "data": [
+      {
+        "id": 1, 
+        "title": "Yves Saint Laurent Pur Couture Lipstick",
+        "rating-full": 4,
+        "rating-half": 1,
+        "price": "120.00$",
+        "image": "/yves-saint-loren.png"
+      },
+      {
+        "id": 2,
+        "title": "Yves Saint Laurent Pur Couture Lipstick",
+        "rating-full": 4,
+        "rating-half": 1,
+        "price": "120.00$",
+        "image": "/yves-saint-loren.png"
+      },
+      {
+        "id": 3,
+        "title": "Yves Saint Laurent Pur Couture Lipstick",
+        "rating-full": 4,
+        "rating-half": 1,
+        "price": "120.00$",
+        "image": "/yves-saint-loren.png"
+      },
+      {
+        "id": 4,
+        "title": "Yves Saint Laurent Pur Couture Lipstick",
+        "rating-full": 4,
+        "rating-half": 1,
+        "price": "120.00$",
+        "image": "/yves-saint-loren.png"
+      },
+      {
+        "id": 5,
+        "title": "Yves Saint Laurent Pur Couture Lipstick",
+        "rating-full": 4,
+        "rating-half": 1,
+        "price": "120.00$",
+        "image": "/yves-saint-loren.png"
+      },
+      {
+        "id": 6,
+        "title": "Yves Saint Laurent Pur Couture Lipstick",
+        "rating-full": 4,
+        "rating-half": 1,
+        "price": "120.00$",
+        "image": "/yves-saint-loren.png"
+      }
+    ]
+}
