@@ -1,6 +1,7 @@
 import { Brygada_1918, Great_Vibes } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/nav";
+import Footer from "@/components/footer/footer";
 
 const geistPrimary = Brygada_1918({
   variable: "--font-brygada-1918",
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
       >
         <Navbar/>
         {children}
+        <Footer/>
       </body>
     </html>
   );
