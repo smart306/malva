@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 const data = [
   {
     id: 1,
@@ -29,6 +30,7 @@ const data = [
   },
 ];
 export default function ButtonCategoryMain() {
+  const router = useRouter();
   return (
     <div>
       <div className="my-container">
@@ -40,6 +42,7 @@ export default function ButtonCategoryMain() {
               size="ghostsize"
               key={item.id}
               className="w-full h-auto overflow-hidden"
+              onClick={() => router.push(`/category`)}
             >
               <div className="group relative aspect-video cursor-pointer">
                 <Image

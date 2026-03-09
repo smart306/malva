@@ -59,7 +59,7 @@ export default function Header(){
                   світу
                 </p>
               </div>
-              <Button className="py-2 px-4 text-2xl">Асортимент</Button>
+              <Button className="py-2 px-4 text-2xl rounded-full">Асортимент</Button>
             </div>
           </div>
         </div>

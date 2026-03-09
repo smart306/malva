@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-secondary font-secondary border border-secondary rounded-full my-transition hover:bg-secondary hover:text-primary hover:boreder-primary cursor-pointer focus:bg-secondary",
+          "bg-primary text-secondary font-secondary border border-secondary my-transition hover:bg-secondary hover:text-primary hover:boreder-primary cursor-pointer focus:bg-secondary",
         category1:
           "bg-transparent font-primary text-white hover:text-primary my-transition cursor-pointer",
         category2:
@@ -18,7 +18,8 @@ const buttonVariants = cva(
         card: "bg-border text-primary rounded-full hover:bg-primary hover:text-border hover:border hover:border-border my-transition",
         secondary:
           "bg-secondary text-primary font-secondary border border-primary my-transition hover:bg-primary hover:text-secondary hover:border-secondary cursor-pointer",
-        ghost: "bg-transparent my-transition cursor-pointer",
+        ghost: "my-transition cursor-pointer",
+        color: "cursor-pointer border border-secondary my-transition hover:scale-150", 
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

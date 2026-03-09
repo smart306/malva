@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Footer(){
     return (
-      <footer className="bg-primary border-b-2 border-t-2 border-border-nav">
+      <footer className="z-50 bg-primary border-b-2 border-t-2 border-border-nav">
         <div className="my-container">
           <div className="p-4 w-full flex flex-col lg:flex-row justify-between">
             <div className="p-4 space-y-4 md:flex md:gap-4 lg:flex-col">

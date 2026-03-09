@@ -27,7 +27,7 @@ export default function Subscribe() {
                     placeholder="Введіть свій емейл..."
                     className="w-full border-2 border-primary p-4"
                   />
-                  <Button className="p-4 text-2xl">Надати</Button>
+                  <Button className="p-4 text-2xl rounded-full">Надати</Button>
                 </Field>
           </div>
         </div>
