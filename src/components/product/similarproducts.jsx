@@ -1,28 +1,19 @@
-"use client";
-import dataFile from "../../app/data/data.json";
-import { Button } from "../ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
-import Image from "next/image";
-import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
-import { ShoppingBasket, Star, StarHalf } from "lucide-react";
 import Link from "next/link";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import Image from "next/image";
+import { ShoppingBasket, Star, StarHalf } from "lucide-react";
+import { Button } from "../ui/button";
 
-export default function NewProduct() {
-  const products = dataFile.data;
-
-  return (
-    <div className="py-10 overflow-x-hidden">
-      <div className="my-container">
-        <h1 className="h1 text-white text-center p-4">Найновіші товари</h1>
-        <Carousel opts={{ align: "start" }} className="w-full">
+export default function SimilarProducts({data}){
+    return (
+      <section className="bg-primary">
+        <div className="w-full text-center p-4">
+          <h1 className="font-primary h1 text-white">Схожі товари</h1>
+        </div>
+        <Carousel opts={{ align: "start" }} className="w-full h-full p-4">
           <CarouselContent>
-            {products.map((item) => (
+            {data.map((item) => (
               <CarouselItem
                 key={item.id}
                 className="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 h-full"
@@ -64,7 +55,6 @@ export default function NewProduct() {
             ))}
           </CarouselContent>
         </Carousel>
-      </div>
-    </div>
-  );
+      </section>
+    );
 }
