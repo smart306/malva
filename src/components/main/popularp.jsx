@@ -13,9 +13,7 @@ import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { ShoppingBasket, Star, StarHalf } from "lucide-react";
 import Link from "next/link";
 
-export default function PopularProduct() {
-  const products = dataFile.data;
-  
+export default function PopularProduct({data}) {
     return (
       <div className="py-10 overflow-x-hidden">
         <div className="my-container">
@@ -31,17 +29,17 @@ export default function PopularProduct() {
             className="w-full h-full"
           >
             <CarouselContent>
-              {products.map((item) => (
+              {data.map((item) => (
                 <CarouselItem
                   key={item.id}
                   className="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 h-full"
                 >
-                  <Link href="/product">
+                   <Link href={`/product/${item._id}`} key={item.id}>
                     <Card className="w-full h-full hover:scale-110 my-transition">
                       <CardContent className="">
                         <div className="relative rounded-xl py-4 w-full h-64 bg-white overflow-hidden">
                           <Image
-                            src={item.image1}
+                            src={item?.images[0]}
                             alt={item.title}
                             fill
                             className="object-contain p-4"
@@ -62,7 +60,7 @@ export default function PopularProduct() {
                       </CardHeader>
 
                       <CardFooter className="flex justify-between items-center">
-                        <p className="font-secondary text-xl">{item.price}</p>
+                        <p className="font-secondary text-xl">{item.price}$</p>
                         <Button variant="card" className="p-2">
                           <ShoppingBasket className="" />
                         </Button>

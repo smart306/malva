@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ShoppingBasket, Star, StarHalf } from "lucide-react";
 import { Button } from "../ui/button";
 
-export default function SimilarProducts({data}){
+export default function SimilarProducts({datasimilar}){
     return (
       <section className="bg-primary">
         <div className="w-full text-center p-4">
@@ -13,7 +13,7 @@ export default function SimilarProducts({data}){
         </div>
         <Carousel opts={{ align: "start" }} className="w-full h-full p-4">
           <CarouselContent>
-            {data.map((item) => (
+            {datasimilar.map((item) => (
               <CarouselItem
                 key={item.id}
                 className="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 h-full"
@@ -23,7 +23,7 @@ export default function SimilarProducts({data}){
                     <CardContent className="">
                       <div className="relative rounded-xl py-4 w-full h-64 bg-white">
                         <Image
-                          src={item.image1}
+                          src={item.images[0]}
                           alt={item.title}
                           fill
                           className="object-contain p-4"
@@ -44,7 +44,7 @@ export default function SimilarProducts({data}){
                     </CardHeader>
 
                     <CardFooter className="flex justify-between items-center">
-                      <p className="font-secondary text-xl">{item.price}</p>
+                      <p className="font-secondary text-xl">{item.price}$</p>
                       <Button variant="card" className="p-2">
                         <ShoppingBasket className="" />
                       </Button>

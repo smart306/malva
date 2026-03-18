@@ -1,14 +1,14 @@
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 
-export default function Reviews({data}){
+export default function Reviews({datareview}){
     return (
       <section className="bg-secondary p-4">
         <div className="w-full text-center">
           <h1 className="text-primary font-primary h1">Відгуки</h1>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full gap-4 p-4">
-          {data.reviews.map((item) => (
+          {datareview.map((item) => (
             <div key={item.id} className="bg-primary rounded-2xl p-2">
               <div className="p-2 flex items-center space-x-4">
                 <Avatar>

@@ -1,15 +1,14 @@
 "use client"
 import { SidebarProvider, useSidebar } from "../ui/sidebar";
 import Filter from "./filter";
-import dataFile from "../../app/data/data.json";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { ShoppingBasket, SlidersIcon, Star, StarHalf } from "lucide-react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import Background from "../background";
 import Link from "next/link";
-export default function ContentCategory(){
-    const products = dataFile.data;
+export default function ContentCategory({datacontent}){
+    
     const MobileTrigger = () => {
       const { toggleSidebar } = useSidebar();
       return (
@@ -31,13 +30,13 @@ export default function ContentCategory(){
             <Filter />
             <div className="flex-1">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
-                {products.map((item) => (
-                  <Link href="/product" key={item.id}>
+                {datacontent.map((item) => (
+                  <Link href={`/product/${item._id}`} key={item.id}>
                     <Card className="w-full h-full hover:scale-110 my-transition">
                       <CardContent className="">
                         <div className="relative rounded-xl py-4 w-full h-auto aspect-square bg-white overflow-hidden">
                           <Image
-                            src={item.image1}
+                            src={item?.images[0]}
                             alt={item.title}
                             fill
                             className="object-contain p-4"
