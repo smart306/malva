@@ -1,4 +1,5 @@
 import Category from "@/components/category";
+import Product from "@/lib/models/products";
 import { connectDB } from "@/lib/mongoose";
 
 export default async function CategoryPage() {

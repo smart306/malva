@@ -1,12 +1,10 @@
 "use client"
 import { SidebarProvider, useSidebar } from "../ui/sidebar";
 import Filter from "./filter";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { ShoppingBasket, SlidersIcon, Star, StarHalf } from "lucide-react";
+import { SlidersIcon } from "lucide-react";
 import { Button } from "../ui/button";
-import Image from "next/image";
 import Background from "../background";
-import Link from "next/link";
+import CardProduct from "./cardpro";
 export default function ContentCategory({datacontent}){
     
     const MobileTrigger = () => {
@@ -31,39 +29,7 @@ export default function ContentCategory({datacontent}){
             <div className="flex-1">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
                 {datacontent.map((item) => (
-                  <Link href={`/product/${item._id}`} key={item.id}>
-                    <Card className="w-full h-full hover:scale-110 my-transition">
-                      <CardContent className="">
-                        <div className="relative rounded-xl py-4 w-full h-auto aspect-square bg-white overflow-hidden">
-                          <Image
-                            src={item?.images[0]}
-                            alt={item.title}
-                            fill
-                            className="object-contain p-4"
-                          />
-                        </div>
-                      </CardContent>
-                      <CardHeader className="flex flex-col justify-center items-center">
-                        <CardTitle className="text-2xl text-center font-secondary">
-                          {item.title}
-                        </CardTitle>
-                        <div className="flex">
-                          <Star className="text-border" />
-                          <Star className="text-border" />
-                          <Star className="text-border" />
-                          <Star className="text-border" />
-                          <StarHalf className="text-border" />
-                        </div>
-                      </CardHeader>
-
-                      <CardFooter className="flex justify-between items-center">
-                        <p className="font-secondary text-xl">{item.price}</p>
-                        <Button variant="card" className="p-2">
-                          <ShoppingBasket className="" />
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  </Link>
+                 <CardProduct key={item._id} item={item}/>
                 ))}
               </div>
               <div className="w-full flex justify-center p-4">

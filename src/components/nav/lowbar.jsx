@@ -26,6 +26,7 @@ import {
 } from "../ui/sheet";
 import { Separator } from "../ui/separator";
 import TopBar from "./topbar";
+import Link from "next/link";
 
 const data = [
   {
@@ -61,8 +62,15 @@ export default function Lowbar() {
               </NavigationMenuItem>
             </div>
             <div className="flex gap-2">
-              <NavigationMenuItem className="hover:scale-120 cursor-pointer my-transition">
-                <ShoppingBasket className="text-primary-foreground" />
+              <NavigationMenuItem
+                asChild
+                className="hover:scale-120 cursor-pointer my-transition"
+              >
+                <Link href="/cart">
+                  <Button variant="ghost">
+                    <ShoppingBasket className="text-primary-foreground" />
+                  </Button>
+                </Link>
               </NavigationMenuItem>
               <NavigationMenuItem className="hover:scale-120 cursor-pointer my-transition">
                 <Heart className="text-primary-foreground" />
