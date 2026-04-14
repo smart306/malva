@@ -3,7 +3,37 @@
 import { FacebookIcon, InstagramIcon, Mail, MapPinned, Phone } from "lucide-react";
 import Image from "next/image"
 import Link from "next/link";
-
+import { ToolTipPages } from "../toolt/tooltip";
+const data = [
+  {
+    title: "Про нас",
+    href: "/about",
+  },
+  {
+    title: "Доставка та оплата",
+    href: "/delivery",
+  },
+  {
+    title: "Політика конфіденційності",
+    href: "/policy",
+  },
+  {
+    title: "Публічна оферта",
+    href: "/oferta",
+  },
+  {
+    title: "Гарантії та повернення",
+    href: "/return",
+  },
+  {
+    title: "Контактна інформація",
+    href: "/contact",
+  },
+  {
+    title: "Часті питання",
+    href: "/faq",
+  },
+];
 export default function Footer(){
     return (
       <footer className="z-50 bg-primary border-b-2 border-t-2 border-border-nav">
@@ -59,67 +89,28 @@ export default function Footer(){
                 Корисні посилання
               </h1>
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 p-1">
-                <div className="flex justify-center items-center text-center w-full">
+                {data.map((item, i) => (
                   <Link
-                    href="\"
-                    className="text-base text-secondary font-primary"
+                    key={item.title}
+                    href={item.href}
+                    className="w-full navtext text-foreground hover:underline text-nowrap"
                   >
-                    Доставка та оплата
+                    <ToolTipPages text={item.title}>
+                      <span>{item.title}</span>
+                    </ToolTipPages>
                   </Link>
-                </div>
-                <div className="flex justify-center items-center text-center w-full">
-                  <Link
-                    href="\"
-                    className="text-base text-secondary font-primary"
-                  >
-                    Політика конфіденційності
-                  </Link>
-                </div>
-                <div className="flex justify-center items-center text-center w-full">
-                  <Link
-                    href="\"
-                    className="text-base text-secondary font-primary"
-                  >
-                    Контактна інформація
-                  </Link>
-                </div>
-                <div className="flex justify-center items-center text-center w-full">
-                  <Link
-                    href="\"
-                    className="text-base text-secondary font-primary"
-                  >
-                    Публічна оферта
-                  </Link>
-                </div>
-                <div className="flex justify-center items-center text-center w-full">
-                  <Link
-                    href="\"
-                    className="text-base text-secondary font-primary"
-                  >
-                    Гарантії та повернення
-                  </Link>
-                </div>
-                <div className="flex justify-center items-center text-center w-full">
-                  <Link
-                    href="\"
-                    className="text-base text-secondary font-primary"
-                  >
-                    Про нас
-                  </Link>
-                </div>
-                <div className="flex justify-center items-center text-center w-full col-span-2 lg:col-span-1">
-                  <Link
-                    href="\"
-                    className="text-base text-secondary font-primary"
-                  >
-                    Часті питання
-                  </Link>
-                </div>
+                ))}
               </div>
               <div className="flex lg:justify-end justify-center">
-                <InstagramIcon width={36} height={36} />
-                <FacebookIcon width={36} height={36} />
-                <Image src="/tiktok.svg" width={36} height={36} alt="p" />
+                <ToolTipPages text={"Instagram"}>
+                  <InstagramIcon width={36} height={36} />
+                </ToolTipPages>
+                <ToolTipPages text={"Facebook"}>
+                  <FacebookIcon width={36} height={36} />
+                </ToolTipPages>
+                <ToolTipPages text={"TikTok"}>
+                  <Image src="/tiktok.svg" width={36} height={36} alt="p" />
+                </ToolTipPages>
               </div>
             </div>
           </div>

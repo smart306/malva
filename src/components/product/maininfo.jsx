@@ -3,8 +3,19 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { Star, StarHalf } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
+import { addToCart } from "@/lib/cart/cart";
 
 export default function MainInfo({datamain}){
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    addToCart(datamain);
+
+    const event = new Event("cartUpdated");
+    window.dispatchEvent(event);
+  };
+
     return (
       <section className="bg-primary flex flex-col lg:flex-row w-full h-fit pt-12 lg:pt-28">
         <div className="hidden sm:flex flex-row lg:flex-col w-full space-x-2 lg:space-x-0 lg:w-fit p-4">
@@ -80,7 +91,7 @@ export default function MainInfo({datamain}){
             <div className="w-full space-y-4 sm:space-y-2">
               <p className="h2 font-secondary">{datamain.price}$</p>
               <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row w-full">
-                <Button className="px-4 py-2 rounded-full text-base lg:text-2xl w-full sm:w-1/2">
+                <Button className="px-4 py-2 rounded-full text-base lg:text-2xl w-full sm:w-1/2" onClick={handleSubmit}>
                   Додати до кошику
                 </Button>
                 <Button

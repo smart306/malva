@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { ToolTipPages } from "../toolt/tooltip";
 const data = [
   {
     id: 1,
@@ -77,40 +78,42 @@ export default function CategoryButton() {
           {data
             .filter((item) => item.id !== 1)
             .map((item) => (
-              <Button
-                asChild
-                variant="category1"
-                size="ghostsize"
-                key={item.id}
-                className="w-full overflow-hidden"
-                onClick={() => router.push(`/category`)}
-              >
-                <div className="group relative aspect-[30/9] md:aspect-[10/9] lg:aspect-video h-full cursor-pointer">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover my-transition group-hover:scale-105"
-                  />
-                  <div
-                    className={cn(
-                      item.gradient,
-                      "absolute inset-0 z-10 h-full ",
-                    )}
-                  />
-                  <div
-                    className={cn(
-                      item.gradient,
-                      "absolute inset-0 w-[35%] z-10 rotate-180",
-                    )}
-                  />
-                  <div className="absolute inset-0 z-20 flex items-center w-full">
-                    <p className="text-2xl p-6 flex flex-row justify-center text-center w-full text-white text-wrap">
-                      {item.title}
-                    </p>
+              <ToolTipPages key={item.id} text={item.title}>
+                <Button
+                  asChild
+                  variant="category1"
+                  size="ghostsize"
+                  key={item.id}
+                  className="w-full overflow-hidden"
+                  onClick={() => router.push(`/category`)}
+                >
+                  <div className="group relative aspect-[30/9] md:aspect-[10/9] lg:aspect-video h-full cursor-pointer">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className="object-cover my-transition group-hover:scale-105"
+                    />
+                    <div
+                      className={cn(
+                        item.gradient,
+                        "absolute inset-0 z-10 h-full ",
+                      )}
+                    />
+                    <div
+                      className={cn(
+                        item.gradient,
+                        "absolute inset-0 w-[35%] z-10 rotate-180",
+                      )}
+                    />
+                    <div className="absolute inset-0 z-20 flex items-center w-full">
+                      <p className="text-2xl p-6 flex flex-row justify-center text-center w-full text-white text-wrap">
+                        {item.title}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Button>
+                </Button>
+              </ToolTipPages>
             ))}
         </div>
       </div>

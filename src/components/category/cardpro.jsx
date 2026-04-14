@@ -4,13 +4,18 @@ import Image from "next/image";
 import { ShoppingBasket, Star, StarHalf } from "lucide-react";
 import { Button } from "../ui/button";
 import { addToCart } from "@/lib/cart/cart";
+import { ToolTipButtons } from "../toolt/tooltip";
 
 export default function CardProduct({item}){
     const handleSubmit = (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        addToCart(item)
-    }
+      e.preventDefault();
+      e.stopPropagation();
+
+      addToCart(item);
+
+      const event = new Event("cartUpdated");
+      window.dispatchEvent(event);
+    };
     return (
       <Link href={`/product/${item._id}`} key={item.id}>
         <Card className="w-full h-full hover:scale-110 my-transition">
@@ -39,9 +44,15 @@ export default function CardProduct({item}){
 
           <CardFooter className="flex justify-between items-center">
             <p className="font-secondary text-xl">{item.price}</p>
-            <Button onClick={handleSubmit} variant="card" className="p-2">
-              <ShoppingBasket className="" />
-            </Button>
+            <ToolTipButtons text={"Додати у кошик"}>
+              <Button
+                onClick={handleSubmit}
+                variant="card"
+                className="p-2 cursor-pointer"
+              >
+                <ShoppingBasket className="" />
+              </Button>
+            </ToolTipButtons>
           </CardFooter>
         </Card>
       </Link>

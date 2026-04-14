@@ -2,6 +2,7 @@ import { Brygada_1918, Great_Vibes } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/nav";
 import Footer from "@/components/footer/footer";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const geistPrimary = Brygada_1918({
   variable: "--font-brygada-1918",
@@ -26,9 +27,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistPrimary.variable} ${geistSecondary.variable} antialiased`}
       >
-        <Navbar/>
-        {children}
-        <Footer/>
+        <TooltipProvider><div>
+            <Navbar />
+            {children}
+            <Footer />
+          </div></TooltipProvider>
       </body>
     </html>
   );

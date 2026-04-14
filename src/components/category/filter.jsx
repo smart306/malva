@@ -3,7 +3,48 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader } f
 import { Button } from "../ui/button";
 import { Slider } from "../ui/slider";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
-const data = [
+import { useState } from "react";
+import { ToolTipButtons } from "../toolt/tooltip";
+import { cn } from "@/lib/utils";
+const datacolor = [
+  {
+    classname: "bg-color-1",
+  },
+  {
+    classname: "bg-color-2",
+  },
+  {
+    classname: "bg-color-3",
+  },
+  {
+    classname: "bg-color-4",
+  },
+  {
+    classname: "bg-color-5",
+  },
+  {
+    classname: "bg-color-6",
+  },
+  {
+    classname: "bg-color-7",
+  },
+  {
+    classname: "bg-color-8",
+  },
+  {
+    classname: "bg-color-9",
+  },
+  {
+    classname: "bg-color-10",
+  },
+  {
+    classname: "bg-color-11",
+  },
+  {
+    classname: "bg-color-12",
+  },
+];
+const databrand = [
   {
     id: 1,
     brand: "HanGlow",
@@ -86,7 +127,7 @@ const data = [
   }
 ];
 export default function Filter(){
-
+    const [rangeValue, setRangeValue] = useState([25, 50]);
     return (
       <Sidebar
         side="left"
@@ -137,12 +178,17 @@ export default function Filter(){
                 <AccordionTrigger className="h3">Ціна</AccordionTrigger>
                 <AccordionContent>
                   <div className="p-2">
-                    <Slider
-                      defaultValue={[25, 50]}
-                      max={100}
-                      step={1}
-                      className="mx-auto w-full max-w-xs"
-                    />
+                    <ToolTipButtons
+                      text={`${rangeValue[0]} — ${rangeValue[1]}`}
+                    >
+                      <Slider
+                        value={rangeValue} // Важливо: використовуємо value для синхронізації
+                        max={100}
+                        step={1}
+                        onValueChange={(v) => setRangeValue(v)}
+                        className="mx-auto w-full max-w-xs"
+                      />
+                    </ToolTipButtons>
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -154,66 +200,21 @@ export default function Filter(){
                 <AccordionTrigger className="h3">Кольори</AccordionTrigger>
                 <AccordionContent>
                   <div className="grid grid-cols-6 grid-rows-2 p-2 gap-2 w-full">
-                    <Button
-                      size="xs"
-                      variant="color"
-                      className="rounded-full aspect-square bg-color-1"
-                    />
-                    <Button
-                      size="xs"
-                      variant="color"
-                      className="rounded-full aspect-square bg-color-2"
-                    />
-                    <Button
-                      size="xs"
-                      variant="color"
-                      className="rounded-full aspect-square bg-color-3"
-                    />
-                    <Button
-                      size="xs"
-                      variant="color"
-                      className="rounded-full aspect-square bg-color-4"
-                    />
-                    <Button
-                      size="xs"
-                      variant="color"
-                      className="rounded-full aspect-square bg-color-5"
-                    />
-                    <Button
-                      size="xs"
-                      variant="color"
-                      className="rounded-full aspect-square bg-color-6"
-                    />
-                    <Button
-                      size="xs"
-                      variant="color"
-                      className="rounded-full aspect-square bg-color-7"
-                    />
-                    <Button
-                      size="xs"
-                      variant="color"
-                      className="rounded-full aspect-square bg-color-8"
-                    />
-                    <Button
-                      size="xs"
-                      variant="color"
-                      className="rounded-full aspect-square bg-color-9"
-                    />
-                    <Button
-                      size="xs"
-                      variant="color"
-                      className="rounded-full aspect-square bg-color-10"
-                    />
-                    <Button
-                      size="xs"
-                      variant="color"
-                      className="rounded-full aspect-square bg-color-11"
-                    />
-                    <Button
-                      size="xs"
-                      variant="color"
-                      className="rounded-full aspect-square bg-color-12"
-                    />
+                    {datacolor.map((item) => (
+                      <ToolTipButtons
+                        key={item.classname}
+                        text="Обрати цей колір"
+                      >
+                        <Button
+                          size="xs"
+                          variant="color"
+                          className={cn(
+                            "rounded-full aspect-square",
+                            item.classname,
+                          )}
+                        />
+                      </ToolTipButtons>
+                    ))}
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -227,15 +228,14 @@ export default function Filter(){
                 </AccordionTrigger>
                 <AccordionContent>
                   <div className="grid grid-cols-3 gap-1 justify-center items-center">
-                    {data.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex justify-center items-center"
-                      >
-                        <Button className="font-primary font-light px-2 py-1 text-xs w-full rounded-xl">
-                          <p className="text-wrap">{item.brand}</p>
-                        </Button>
-                      </div>
+                    {databrand.map((item) => (
+                      <ToolTipButtons key={item.id} text="Обрати цей бренд">
+                        <div className="flex justify-center items-center">
+                          <Button className="font-primary font-light px-2 py-1 text-xs w-full rounded-xl">
+                            <p className="text-wrap">{item.brand}</p>
+                          </Button>
+                        </div>
+                      </ToolTipButtons>
                     ))}
                   </div>
                 </AccordionContent>
@@ -243,12 +243,14 @@ export default function Filter(){
             </Accordion>
           </SidebarGroup>
           <SidebarGroup>
-            <Button
-              variant="secondary"
-              className="w-full p-2 rounded-full font-primary"
-            >
-              Застосувати
-            </Button>
+            <ToolTipButtons text={"Застосувати обрані фільтри"}>
+              <Button
+                variant="secondary"
+                className="w-full p-2 rounded-full font-primary"
+              >
+                Застосувати
+              </Button>
+            </ToolTipButtons>
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter></SidebarFooter>

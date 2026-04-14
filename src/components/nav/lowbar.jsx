@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import {
   NavigationMenu,
@@ -27,23 +26,28 @@ import {
 import { Separator } from "../ui/separator";
 import TopBar from "./topbar";
 import Link from "next/link";
+import { ToolTipPages } from "../toolt/tooltip";
 
 const data = [
   {
     title: "Пошук",
     image: <Search width={24} height={24} />,
+    link: "/",
   },
   {
     title: "Акаунт",
     image: <UserRound width={24} height={24} />,
+    link: "/",
   },
   {
     title: "Кошик",
     image: <ShoppingBasket width={24} height={24} />,
+    link: "/cart",
   },
   {
     title: "Вподобані",
     image: <Heart width={24} height={24} />,
+    link: "/",
   },
 ];
 export default function Lowbar() {
@@ -62,22 +66,19 @@ export default function Lowbar() {
               </NavigationMenuItem>
             </div>
             <div className="flex gap-2">
-              <NavigationMenuItem
-                asChild
-                className="hover:scale-120 cursor-pointer my-transition"
-              >
-                <Link href="/cart">
-                  <Button variant="ghost">
-                    <ShoppingBasket className="text-primary-foreground" />
-                  </Button>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem className="hover:scale-120 cursor-pointer my-transition">
-                <Heart className="text-primary-foreground" />
-              </NavigationMenuItem>
-              <NavigationMenuItem className="hover:scale-120 cursor-pointer my-transition">
-                <UserRound className="text-primary-foreground" />
-              </NavigationMenuItem>
+              <div className="flex gap-2">
+                {data.map((item) => (
+                  <NavigationMenuItem key={item.title}>
+                    <Link href={item.link}>
+                      <ToolTipPages text={item.title}>
+                        <Button variant="ghost" className="relative">
+                          {item.image}
+                        </Button>
+                      </ToolTipPages>
+                    </Link>
+                  </NavigationMenuItem>
+                ))}
+              </div>
             </div>
           </NavigationMenuList>
           <NavigationMenuList className="lg:hidden w-full flex flex-row justify-between">
@@ -91,11 +92,11 @@ export default function Lowbar() {
                   size={"ghostsize"}
                   className="w-fit h-full"
                 >
-                  <AlignJustify
-                    className="text-primary-foreground cursor-pointer"
-                    width={40}
-                    height={40}
-                  />
+                    <AlignJustify
+                      className="text-primary-foreground cursor-pointer"
+                      width={40}
+                      height={40}
+                    />
                 </Button>
               </SheetTrigger>
               <SheetContent

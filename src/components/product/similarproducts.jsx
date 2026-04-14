@@ -1,9 +1,5 @@
-import Link from "next/link";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import Image from "next/image";
-import { ShoppingBasket, Star, StarHalf } from "lucide-react";
-import { Button } from "../ui/button";
+import CardProduct from "../category/cardpro";
 
 export default function SimilarProducts({datasimilar}){
     return (
@@ -13,47 +9,15 @@ export default function SimilarProducts({datasimilar}){
         </div>
         <Carousel opts={{ align: "start" }} className="w-full h-full p-4">
           <CarouselContent>
-            {datasimilar.map((item) => (
-              <CarouselItem
-                key={item.id}
-                className="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 h-full"
-              >
-                <Link href="/product">
-                  <Card className="w-full h-full hover:scale-110 my-transition">
-                    <CardContent className="">
-                      <div className="relative rounded-xl py-4 w-full h-64 bg-white">
-                        <Image
-                          src={item.images[0]}
-                          alt={item.title}
-                          fill
-                          className="object-contain p-4"
-                        />
-                      </div>
-                    </CardContent>
-                    <CardHeader className="flex flex-col justify-center items-center">
-                      <CardTitle className="text-2xl text-center font-secondary">
-                        {item.title}
-                      </CardTitle>
-                      <div className="flex">
-                        <Star className="text-border" />
-                        <Star className="text-border" />
-                        <Star className="text-border" />
-                        <Star className="text-border" />
-                        <StarHalf className="text-border" />
-                      </div>
-                    </CardHeader>
-
-                    <CardFooter className="flex justify-between items-center">
-                      <p className="font-secondary text-xl">{item.price}$</p>
-                      <Button variant="card" className="p-2">
-                        <ShoppingBasket className="" />
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                </Link>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
+                {datasimilar.map((item) => (
+                  <CarouselItem
+                    key={item.id}
+                    className="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 h-full"
+                  >
+                    <CardProduct item={item}/>
+                  </CarouselItem>
+                ))}
+            </CarouselContent>
         </Carousel>
       </section>
     );

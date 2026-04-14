@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { ToolTipPages } from "../toolt/tooltip";
 const data = [
   {
     id: 1,
@@ -36,33 +37,29 @@ export default function ButtonCategoryMain() {
       <div className="my-container">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {data.map((item) => (
-            <Button
-              asChild
-              variant="category1"
-              size="ghostsize"
-              key={item.id}
-              className="w-full h-auto overflow-hidden"
-              onClick={() => router.push(`/category`)}
-            >
-              <div className="group relative aspect-video cursor-pointer">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-contain my-transition group-hover:scale-105"
-                />
-                <div className={cn(item.gradient, "absolute inset-0 z-10")} />
-                <div className="absolute inset-0 z-20 flex items-center w-full">
-                  <p
-                    className={cn(
-                      "text-2xl p-6 flex flex-row justify-center text-center w-full",
-                    )}
-                  >
-                    {item.title}
-                  </p>
+            <ToolTipPages key={item.id} text={item.title}>
+              <Button
+                variant="category1"
+                size="ghostsize"
+                className="w-full h-auto overflow-hidden p-0" /* Added p-0 to keep the div flush */
+                onClick={() => router.push(`/category`)}
+              >
+                <div className="group relative aspect-video w-full">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-contain my-transition group-hover:scale-105"
+                  />
+                  <div className={cn(item.gradient, "absolute inset-0 z-10")} />
+                  <div className="absolute inset-0 z-20 flex items-center w-full">
+                    <p className="text-2xl p-6 flex flex-row justify-center text-center w-full">
+                      {item.title}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Button>
+              </Button>
+            </ToolTipPages>
           ))}
         </div>
       </div>

@@ -5,6 +5,7 @@ import { SlidersIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import Background from "../background";
 import CardProduct from "./cardpro";
+import { ToolTipButtons } from "../toolt/tooltip";
 export default function ContentCategory({datacontent}){
     
     const MobileTrigger = () => {
@@ -29,18 +30,17 @@ export default function ContentCategory({datacontent}){
             <div className="flex-1">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
                 {datacontent.map((item) => (
-                 <CardProduct key={item._id} item={item}/>
+                  <CardProduct key={item._id} item={item} />
                 ))}
               </div>
               <div className="w-full flex justify-center p-4">
-                <Button
-                  variant="secondary"
-                  className="px-4 py-2 flex justify-center items-center text-center rounded-full w-full md:w-fit"
-                >
-                  <p className="h3 font-secondary text-center items-center ">
-                    Більше
-                  </p>
-                </Button>
+                <ToolTipButtons text="Більше товарів">
+                  <Button className="px-4 py-2 flex justify-center items-center text-center rounded-full w-full md:w-fit">
+                    <p className="h3 font-secondary text-center items-center ">
+                      Більше
+                    </p>
+                  </Button>
+                </ToolTipButtons>
               </div>
             </div>
           </SidebarProvider>

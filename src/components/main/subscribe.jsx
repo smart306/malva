@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Field, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { ToolTipButtons } from "../toolt/tooltip";
 
 export default function Subscribe() {
   return (
@@ -18,17 +19,19 @@ export default function Subscribe() {
             />
           </div>
           <div className="w-full flex flex-row justify-center items-center">
-                <Field className="flex flex-col items-center justify-center h-full max-w-md">
-                  <FieldLabel className="text-black font-primary text-4xl text-center">
-                    Надайте свій емейл, щоб найпершим отримувати сповіщення про
-                    нові товари
-                  </FieldLabel>
-                  <Input
-                    placeholder="Введіть свій емейл..."
-                    className="w-full border-2 border-primary p-4"
-                  />
-                  <Button className="p-4 text-2xl rounded-full">Надати</Button>
-                </Field>
+            <Field className="flex flex-col items-center justify-center h-full max-w-md">
+              <FieldLabel className="text-black font-primary text-4xl text-center">
+                Надайте свій емейл, щоб найпершим отримувати сповіщення про нові
+                товари
+              </FieldLabel>
+              <Input
+                placeholder="Введіть свій емейл..."
+                className="w-full border-2 border-primary p-4"
+              />
+              <ToolTipButtons text="Надати емейл для отримання сповіщень про новинки">
+                <Button className="p-4 text-2xl rounded-full w-full">Надати</Button>
+              </ToolTipButtons>
+            </Field>
           </div>
         </div>
       </div>

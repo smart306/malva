@@ -7,6 +7,7 @@ import {
 } from "../ui/navigation-menu";
 
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
+import { ToolTipPages } from "../toolt/tooltip";
 const data = [
   {
     title: "Про нас",
@@ -64,7 +65,9 @@ export default function TopBar() {
                     href={item.href}
                     className="w-full navtext text-foreground hover:underline text-nowrap"
                   >
-                    {item.title}
+                    <ToolTipPages text={item.title}>
+                      <span>{item.title}</span>
+                    </ToolTipPages>
                   </Link>
                 </NavigationMenuItem>
               </CarouselItem>
