@@ -39,6 +39,8 @@ export default function ProductForm() {
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isUploadingImages, setIsUploadingImages] = useState(false);
+  const [uploadedImages, setUploadedImages] = useState([]);
   const [status, setStatus] = useState("");
   const [formData, setFormData] = useState({
     title: "",
@@ -89,6 +91,49 @@ export default function ProductForm() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   }
 
+  async function handleUploadImages(event) {
+    const files = Array.from(event.target.files || []);
+    if (files.length === 0) {
+      return;
+    }
+
+    setStatus("");
+
+    try {
+      setIsUploadingImages(true);
+      const uploadedUrls = [];
+
+      for (const file of files) {
+        const body = new FormData();
+        body.append("file", file);
+
+        const response = await fetch("/api/upload-image", {
+          method: "POST",
+          body,
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.success || !data.url) {
+          throw new Error(data.message || "Не вдалося завантажити зображення");
+        }
+
+        uploadedUrls.push(data.url);
+      }
+
+      setUploadedImages((prev) => [...prev, ...uploadedUrls]);
+      setStatus(`Завантажено ${uploadedUrls.length} зображень`);
+    } catch (error) {
+      setStatus(error.message || "Помилка завантаження зображень");
+    } finally {
+      setIsUploadingImages(false);
+      event.target.value = "";
+    }
+  }
+
+  function removeUploadedImage(url) {
+    setUploadedImages((prev) => prev.filter((item) => item !== url));
+  }
+
   function applyCategory(categoryId) {
     setSelectedCategoryId(categoryId);
     if (!categoryId) {
@@ -123,9 +168,10 @@ export default function ProductForm() {
       return;
     }
 
-    const images = parseLines(formData.imagesText);
+    const manualImages = parseLines(formData.imagesText);
+    const images = [...uploadedImages, ...manualImages];
     if (images.length === 0) {
-      setStatus("Додайте хоча б одне зображення (по одному URL/шляху на рядок)");
+      setStatus("Додайте хоча б одне зображення через upload або URL");
       return;
     }
 
@@ -206,6 +252,7 @@ export default function ProductForm() {
         colorsText: "",
         reviewsText: "",
       }));
+      setUploadedImages([]);
     } catch (error) {
       setStatus(error.message || "Сталася помилка");
     } finally {
@@ -361,7 +408,38 @@ export default function ProductForm() {
       )}
 
       <div className="space-y-2">
-        <Label htmlFor="product-images">Зображення (кожен шлях з нового рядка)</Label>
+        <Label htmlFor="product-images-upload">Завантажити зображення у Blob</Label>
+        <Input
+          id="product-images-upload"
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleUploadImages}
+          disabled={isUploadingImages}
+        />
+        {isUploadingImages ? (
+          <p className="text-sm text-secondary">Завантаження зображень...</p>
+        ) : null}
+
+        {uploadedImages.length > 0 ? (
+          <div className="space-y-2 rounded-2xl border border-border p-3">
+            <p className="text-sm">Завантажені зображення:</p>
+            <div className="space-y-2">
+              {uploadedImages.map((url) => (
+                <div key={url} className="flex items-center justify-between gap-3">
+                  <p className="truncate text-xs">{url}</p>
+                  <Button type="button" variant="secondary" onClick={() => removeUploadedImage(url)}>
+                    Видалити
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="product-images">Або вставте URL зображень (кожен з нового рядка)</Label>
         <textarea
           id="product-images"
           value={formData.imagesText}
