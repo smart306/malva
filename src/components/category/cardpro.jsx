@@ -17,7 +17,7 @@ export default function CardProduct({item}){
       window.dispatchEvent(event);
     };
     return (
-      <Link href={`/product/${item._id}`} key={item.id}>
+      <Link href={`/catalog/product/${item._id}`} key={item.id}>
         <Card className="w-full h-full hover:scale-110 my-transition">
           <CardContent className="">
             <div className="relative rounded-xl py-4 w-full h-auto aspect-square bg-white overflow-hidden">

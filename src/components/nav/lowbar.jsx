@@ -27,6 +27,7 @@ import { Separator } from "../ui/separator";
 import TopBar from "./topbar";
 import Link from "next/link";
 import { ToolTipPages } from "../toolt/tooltip";
+import SearchInput from "../search";
 
 const data = [
   {
@@ -58,11 +59,12 @@ export default function Lowbar() {
           <NavigationMenuList className="hidden w-full lg:flex flex-row justify-between ">
             <div className="flex flex-row items-center w-full gap-4">
               <NavigationMenuItem className="cursor-pointer">
-                <Image src="/image1.svg" alt="p" width={40} height={40} />
+                <Link href="/">
+                  <Image src="/image1.svg" alt="p" width={40} height={40} />
+                </Link>
               </NavigationMenuItem>
               <NavigationMenuItem className="max-w-200 w-full flex gap-2 cursor-pointer my-transition">
-                <Input placeholder="Пошук..." className="w-full" />
-                <Search />
+                <SearchInput/>
               </NavigationMenuItem>
             </div>
             <div className="flex gap-2">
@@ -109,9 +111,9 @@ export default function Lowbar() {
                     <XIcon />
                   </SheetClose>
                 </SheetHeader>
-                <Separator className="bg-secondary border-[2px] border-secondary rounded-full" />
+                <Separator className="bg-secondary border-2 border-secondary rounded-full" />
                 <div className="flex flex-col gap-2 py-2">
-                  {data.map((item, i) => (
+                  {data.map((item) => (
                     <div
                       key={item.title}
                       className="flex flex-row justify-end items-center gap-2 px-4 py-2"
@@ -123,7 +125,7 @@ export default function Lowbar() {
                     </div>
                   ))}
                 </div>
-                <Separator className="bg-secondary border-[2px] border-secondary rounded-full" />
+                <Separator className="bg-secondary border-2 border-secondary rounded-full" />
                 <TopBar />
               </SheetContent>
             </Sheet>

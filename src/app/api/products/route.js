@@ -1,12 +1,20 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoose";
-import Product from "@/lib/models/products";
+import Models from "@/lib/models/products"; 
+const { ProductDecor, ProductWom, ProductMan, ProductTools } = Models; 
 
 export async function GET() {
   try {
     await connectDB();
 
-    const products = await Product.find({}).lean();
+    const [decor, wom, man, tools] = await Promise.all([
+      ProductDecor.find({}).lean(),
+      ProductWom.find({}).lean(),
+      ProductMan.find({}).lean(),
+      ProductTools.find({}).lean(),
+    ]);
+
+    const products = [...decor, ...wom, ...man, ...tools];
 
     return NextResponse.json({
       success: true,
@@ -26,42 +34,34 @@ export async function GET() {
 export async function POST(request) {
   try {
     await connectDB();
-
     const body = await request.json();
 
-    const existingProduct = await Product.findOne({ id: body.id });
+    let TargetModel;
 
-    if (existingProduct) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Product with this id already exists",
-        },
-        { status: 400 },
-      );
+    switch (body.maincategory) {
+      case "Декоративна косметика":
+        TargetModel = ProductDecor;
+        break;
+      case "Жіноча доглядова косметика":
+        TargetModel = ProductWom;
+        break;
+      case "Чоловіча доглядова косметика":
+        TargetModel = ProductMan;
+        break;
+      case "Інструменти для догляду":
+        TargetModel = ProductTools;
+        break;
+      default:
+        return NextResponse.json(
+          { error: "Невідома категорія" },
+          { status: 400 },
+        );
     }
 
-    const product = await Product.create({
-      id: body.id,
-      title: body.title,
-      description: body.description,
-      ratingFull: body.ratingFull || 0,
-      ratingHalf: body.ratingHalf || 0,
-      price: body.price,
-      images: body.images || [],
-      info: body.info || [],
-      colors: body.colors || [],
-      reviews: body.reviews || [],
-    });
-
-    return NextResponse.json(
-      {
-        success: true,
-        product,
-      },
-      { status: 201 },
-    );
+    const product = await TargetModel.create(body);
+    return NextResponse.json({ success: true, product }, { status: 201 });
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       {
         success: false,

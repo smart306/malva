@@ -6,6 +6,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "..
 import { useState } from "react";
 import { ToolTipButtons } from "../toolt/tooltip";
 import { cn } from "@/lib/utils";
+import { Label } from "../ui/label";
+import { Field, FieldGroup } from "../ui/field";
+import { Checkbox } from "../ui/checkbox";
 const datacolor = [
   {
     classname: "bg-color-1",
@@ -124,136 +127,155 @@ const databrand = [
   {
     id: 20,
     brand: "NYX",
-  }
+  },
 ];
-export default function Filter(){
-    const [rangeValue, setRangeValue] = useState([25, 50]);
-    return (
-      <Sidebar
-        side="left"
-        className="h-full p-4 bg-linear-to-r from-transparent to-primary"
-      >
-        <SidebarHeader className="flex flex-row justify-between w-full border-b border-secondary">
-          <h1 className="text-secondary font-primary h3">Фільтри</h1>
-          <Image src="/Frame.svg" alt="p" width={16} height={16} />
-        </SidebarHeader>
-        <SidebarContent>
-          <SidebarGroup className="gap-4 border-b border-secondary">
-            <Accordion type="single" collapsible className="p-2">
-              <AccordionItem value="face">
-                <AccordionTrigger className="p font-primary">
-                  Обличчя
-                </AccordionTrigger>
-                <AccordionContent></AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="eye">
-                <AccordionTrigger className="p font-primary">
-                  Очі
-                </AccordionTrigger>
-                <AccordionContent></AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="brows">
-                <AccordionTrigger className="p font-primary">
-                  Брови
-                </AccordionTrigger>
-                <AccordionContent></AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="brush">
-                <AccordionTrigger className="p font-primary">
-                  Пензлі
-                </AccordionTrigger>
-                <AccordionContent></AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="nails">
-                <AccordionTrigger className="p font-primary">
-                  Нігті
-                </AccordionTrigger>
-                <AccordionContent></AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </SidebarGroup>
-          <SidebarGroup className="gap-4 border-b border-secondary">
-            <Accordion type="single" collapsible className="p-2">
-              <AccordionItem value="price">
-                <AccordionTrigger className="h3">Ціна</AccordionTrigger>
-                <AccordionContent>
-                  <div className="p-2">
+export default function Filter() {
+  const [rangeValue, setRangeValue] = useState([25, 50]);
+  return (
+    <Sidebar
+      side="left"
+      className="h-full p-4 bg-linear-to-r from-transparent to-primary"
+    >
+      <SidebarHeader className="flex flex-row justify-between w-full border-b border-secondary">
+        <h1 className="text-secondary font-primary h3">Фільтри</h1>
+        <Image src="/Frame.svg" alt="p" width={16} height={16} />
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup className="gap-4 border-b border-secondary">
+          <FieldGroup className="p-2">
+            <Field
+              orientation="horizontal"
+              value="face"
+              className="flex justify-between"
+            >
+              <Label htmlFor="filter-checkbox" className="p font-primary">
+                Обличчя
+              </Label>
+              <Checkbox id="filter-checkbox" name="filter-checkbox" />
+            </Field>
+            <Field
+              orientation="horizontal"
+              value="face"
+              className="flex justify-between"
+            >
+              <Label htmlFor="filter-checkbox" className="p font-primary">
+                Очі
+              </Label>
+              <Checkbox id="filter-checkbox" name="filter-checkbox" />
+            </Field>
+            <Field
+              orientation="horizontal"
+              value="face"
+              className="flex justify-between"
+            >
+              <Label htmlFor="filter-checkbox" className="p font-primary">
+                Брови
+              </Label>
+              <Checkbox id="filter-checkbox" name="filter-checkbox" />
+            </Field>
+            <Field
+              orientation="horizontal"
+              value="face"
+              className="flex justify-between"
+            >
+              <Label htmlFor="filter-checkbox" className="p font-primary">
+                Губи
+              </Label>
+              <Checkbox id="filter-checkbox" name="filter-checkbox" />
+            </Field>
+            <Field
+              orientation="horizontal"
+              value="face"
+              className="flex justify-between"
+            >
+              <Label htmlFor="filter-checkbox" className="p font-primary">
+                Нігті
+              </Label>
+              <Checkbox id="filter-checkbox" name="filter-checkbox" />
+            </Field>
+          </FieldGroup>
+        </SidebarGroup>
+        <SidebarGroup className="gap-4 border-b border-secondary">
+          <Accordion type="single" collapsible className="p-2">
+            <AccordionItem value="price">
+              <AccordionTrigger className="h3">Ціна</AccordionTrigger>
+              <AccordionContent>
+                <div className="p-2">
+                  <ToolTipButtons text={`${rangeValue[0]} — ${rangeValue[1]}`}>
+                    <Slider
+                      value={rangeValue} // Важливо: використовуємо value для синхронізації
+                      max={100}
+                      step={1}
+                      onValueChange={(v) => setRangeValue(v)}
+                      className="mx-auto w-full max-w-xs"
+                    />
+                  </ToolTipButtons>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </SidebarGroup>
+        <SidebarGroup className="gap-4 border-b border-secondary">
+          <Accordion type="single" collapsible className="p-2">
+            <AccordionItem value="color">
+              <AccordionTrigger className="h3">Кольори</AccordionTrigger>
+              <AccordionContent>
+                <div className="grid grid-cols-6 grid-rows-2 p-2 gap-2 w-full">
+                  {datacolor.map((item) => (
                     <ToolTipButtons
-                      text={`${rangeValue[0]} — ${rangeValue[1]}`}
+                      key={item.classname}
+                      text="Обрати цей колір"
                     >
-                      <Slider
-                        value={rangeValue} // Важливо: використовуємо value для синхронізації
-                        max={100}
-                        step={1}
-                        onValueChange={(v) => setRangeValue(v)}
-                        className="mx-auto w-full max-w-xs"
+                      <Button
+                        size="xs"
+                        variant="color"
+                        className={cn(
+                          "rounded-full aspect-square",
+
+                          item.classname,
+                        )}
                       />
                     </ToolTipButtons>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </SidebarGroup>
-          <SidebarGroup className="gap-4 border-b border-secondary">
-            <Accordion type="single" collapsible className="p-2">
-              <AccordionItem value="color">
-                <AccordionTrigger className="h3">Кольори</AccordionTrigger>
-                <AccordionContent>
-                  <div className="grid grid-cols-6 grid-rows-2 p-2 gap-2 w-full">
-                    {datacolor.map((item) => (
-                      <ToolTipButtons
-                        key={item.classname}
-                        text="Обрати цей колір"
-                      >
-                        <Button
-                          size="xs"
-                          variant="color"
-                          className={cn(
-                            "rounded-full aspect-square",
-                            item.classname,
-                          )}
-                        />
-                      </ToolTipButtons>
-                    ))}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </SidebarGroup>
-          <SidebarGroup className="gap-4 border-b border-secondary">
-            <Accordion type="single" collapsible className="p-2">
-              <AccordionItem value="brands">
-                <AccordionTrigger className="h3 text-secondary">
-                  Бренди
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="grid grid-cols-3 gap-1 justify-center items-center">
-                    {databrand.map((item) => (
-                      <ToolTipButtons key={item.id} text="Обрати цей бренд">
-                        <div className="flex justify-center items-center">
-                          <Button className="font-primary font-light px-2 py-1 text-xs w-full rounded-xl">
-                            <p className="text-wrap">{item.brand}</p>
-                          </Button>
-                        </div>
-                      </ToolTipButtons>
-                    ))}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </SidebarGroup>
-          <SidebarGroup>
-            <ToolTipButtons text={"Застосувати обрані фільтри"}>
-              <Button
-                variant="secondary"
-                className="w-full p-2 rounded-full font-primary"
-              >
-                Застосувати
-              </Button>
-            </ToolTipButtons>
-          </SidebarGroup>
-        </SidebarContent>
-        <SidebarFooter></SidebarFooter>
-      </Sidebar>
-    );
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </SidebarGroup>
+        <SidebarGroup className="gap-4 border-b border-secondary">
+          <Accordion type="single" collapsible className="p-2">
+            <AccordionItem value="brands">
+              <AccordionTrigger className="h3 text-secondary">
+                Бренди
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="grid grid-cols-3 gap-1 justify-center items-center">
+                  {databrand.map((item) => (
+                    <ToolTipButtons key={item.id} text="Обрати цей бренд">
+                      <div className="flex justify-center items-center">
+                        <Button className="font-primary font-light px-2 py-1 text-xs w-full rounded-xl">
+                          <p className="text-wrap">{item.brand}</p>
+                        </Button>
+                      </div>
+                    </ToolTipButtons>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </SidebarGroup>
+        <SidebarGroup>
+          <ToolTipButtons text={"Застосувати обрані фільтри"}>
+            <Button
+              variant="secondary"
+              className="w-full p-2 rounded-full font-primary"
+            >
+              Застосувати
+            </Button>
+          </ToolTipButtons>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter></SidebarFooter>
+    </Sidebar>
+  );
 }

@@ -1,42 +1,42 @@
 "use client";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { ToolTipPages } from "../toolt/tooltip";
 const data = [
   {
     id: 1,
     image: "/Дизайн без назви1(4).svg",
+    slug: "decorative",
     title: "Декоративна косметика",
-    gradient: "bg-linear-to-r from-transparent to-bg-down",
   },
   {
     id: 2,
-    image: "/Frame339.svg",
+    image: "/Дизайн без назви1(1).svg",
+    slug: "men",
     title: "Чоловіча доглядова косметика",
-    gradient: "bg-linear-to-r from-transparent to-bg-down",
   },
   {
     id: 3,
-    image: "/Frame338.svg",
+    image: "/Дизайн без назви1(2).svg",
+    slug: "women",
     title: "Жіноча доглядова косметика",
-    gradient: "bg-linear-to-r from-transparent to-bg-down",
   },
   {
     id: 4,
-    image: "/ezre1.svg",
+    image: "/Дизайн без назви1(3).svg",
+    slug: "tools",
     title: "Інструменти для догляду",
-    gradient:
-      "bg-gradient-to-r from-transparent to-bg-down hover:to-white transition-color my-transition",
   },
 ];
 export default function CategoryButton() {
     const router = useRouter();
+    const params = useParams();
+    const currentSlug = params.slug;
     return (
       <div className="lg:mt-30">
         {data
-          .filter((item) => item.id === 1)
+          .filter((item) => item.slug === currentSlug)
           .map((item) => (
             <div
               key={item.id}
@@ -50,7 +50,7 @@ export default function CategoryButton() {
                     fill
                     className="object-cover"
                   />
-                  <div className={cn(item.gradient, "absolute inset-0 z-10")} />
+                  <div className="w-full absolute inset-0 z-10 rotate-0 bg-linear-to-r from-transparent to-bg-down" />
                 </div>
                 <div className="relative w-1/2 h-full">
                   <Image
@@ -59,12 +59,7 @@ export default function CategoryButton() {
                     fill
                     className="object-cover rotate-180"
                   />
-                  <div
-                    className={cn(
-                      item.gradient,
-                      "absolute inset-0 z-10 rotate-180",
-                    )}
-                  />
+                  <div className="absolute inset-0 z-10 rotate-180 bg-linear-to-r from-transparent to-bg-down" />
                 </div>
                 <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20">
                   <h1 className="text-white text-h1 font-primary">
@@ -76,7 +71,7 @@ export default function CategoryButton() {
           ))}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
           {data
-            .filter((item) => item.id !== 1)
+            .filter((item) => item.slug !== currentSlug)
             .map((item) => (
               <ToolTipPages key={item.id} text={item.title}>
                 <Button
@@ -85,29 +80,20 @@ export default function CategoryButton() {
                   size="ghostsize"
                   key={item.id}
                   className="w-full overflow-hidden"
-                  onClick={() => router.push(`/category`)}
+                  onClick={() => router.push(`/catalog/${item.slug}`)}
                 >
                   <div className="group relative aspect-[30/9] md:aspect-[10/9] lg:aspect-video h-full cursor-pointer">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-cover my-transition group-hover:scale-105"
-                    />
-                    <div
-                      className={cn(
-                        item.gradient,
-                        "absolute inset-0 z-10 h-full ",
-                      )}
-                    />
-                    <div
-                      className={cn(
-                        item.gradient,
-                        "absolute inset-0 w-[35%] z-10 rotate-180",
-                      )}
-                    />
+                    <div className="">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="object-cover my-transition group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 z-10 h-full bg-primary/75 group-hover:bg-primary/0 my-transition" />
+                    </div>
                     <div className="absolute inset-0 z-20 flex items-center w-full">
-                      <p className="text-2xl p-6 flex flex-row justify-center text-center w-full text-white text-wrap">
+                      <p className="text-2xl p-6 flex flex-row justify-center text-center w-full text-white group-hover:text-primary text-wrap">
                         {item.title}
                       </p>
                     </div>

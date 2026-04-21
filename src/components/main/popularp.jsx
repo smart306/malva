@@ -20,7 +20,7 @@ export default function PopularProduct({data}) {
             <CarouselContent>
               {data.map((item) => (
                 <CarouselItem
-                  key={item.id}
+                  key={item._id}
                   className="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 h-full"
                 >
                    <CardProduct item={item}/>

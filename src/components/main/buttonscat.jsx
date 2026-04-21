@@ -8,24 +8,28 @@ const data = [
   {
     id: 1,
     image: "/Дизайн без назви1(4).svg",
+    slug: "decorative",
     title: "Декоративна косметика",
     gradient: "bg-linear-to-r from-transparent to-bg-down",
   },
   {
     id: 2,
     image: "/Дизайн без назви1(1).svg",
+    slug: "men",
     title: "Чоловіча доглядова косметика",
     gradient: "bg-linear-to-l from-transparent to-bg-down",
   },
   {
     id: 3,
     image: "/Дизайн без назви1(2).svg",
+    slug: "women",
     title: "Жіноча доглядова косметика",
     gradient: "bg-linear-to-r from-transparent to-bg-down",
   },
   {
     id: 4,
     image: "/Дизайн без назви1(3).svg",
+    slug: "tools",
     title: "Інструменти для догляду",
     gradient: "bg-linear-to-l from-transparent to-bg-down",
   },
@@ -42,7 +46,7 @@ export default function ButtonCategoryMain() {
                 variant="category1"
                 size="ghostsize"
                 className="w-full h-auto overflow-hidden p-0" /* Added p-0 to keep the div flush */
-                onClick={() => router.push(`/category`)}
+                onClick={() => router.push(`/catalog/${item.slug}`)}
               >
                 <div className="group relative aspect-video w-full">
                   <Image

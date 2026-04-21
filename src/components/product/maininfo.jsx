@@ -78,20 +78,25 @@ export default function MainInfo({datamain}){
           </div>
           <div className="w-full space-y-4 flex flex-col justify-end py-8">
             <div className="flex gap-4 lg:gap-2 justify-center">
-              {datamain.colors.map((item) => (
-                <div key={item.id}>
-                  <Button
-                    size="full"
-                    variant="color"
-                    className={cn("rounded-full aspect-square", item.color)}
-                  />
-                </div>
-              ))}
+              {datamain.colors && datamain.colors.length > 0
+                ? datamain.colors.map((item) => (
+                    <div key={item.id}>
+                      <Button
+                        size="full"
+                        variant="color"
+                        className={cn("rounded-full aspect-square", item.color)}
+                      />
+                    </div>
+                  ))
+                : null}
             </div>
             <div className="w-full space-y-4 sm:space-y-2">
               <p className="h2 font-secondary">{datamain.price}$</p>
               <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row w-full">
-                <Button className="px-4 py-2 rounded-full text-base lg:text-2xl w-full sm:w-1/2" onClick={handleSubmit}>
+                <Button
+                  className="px-4 py-2 rounded-full text-base lg:text-2xl w-full sm:w-1/2"
+                  onClick={handleSubmit}
+                >
                   Додати до кошику
                 </Button>
                 <Button

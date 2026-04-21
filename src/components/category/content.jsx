@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import Background from "../background";
 import CardProduct from "./cardpro";
 import { ToolTipButtons } from "../toolt/tooltip";
-export default function ContentCategory({datacontent}){
+export default function ContentCategory({datacontent, currentCategory}){
     
     const MobileTrigger = () => {
       const { toggleSidebar } = useSidebar();
@@ -26,7 +26,7 @@ export default function ContentCategory({datacontent}){
             <div className="md:hidden flex justify-center items-center p-4">
               <MobileTrigger />
             </div>
-            <Filter />
+            <Filter currentCategory={currentCategory}/>
             <div className="flex-1">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
                 {datacontent.map((item) => (
