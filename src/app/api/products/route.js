@@ -1,20 +1,12 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoose";
-import Models from "@/lib/models/products"; 
-const { ProductDecor, ProductWom, ProductMan, ProductTools } = Models; 
+import ProductModel from "@/lib/models/products";
 
 export async function GET() {
   try {
     await connectDB();
 
-    const [decor, wom, man, tools] = await Promise.all([
-      ProductDecor.find({}).lean(),
-      ProductWom.find({}).lean(),
-      ProductMan.find({}).lean(),
-      ProductTools.find({}).lean(),
-    ]);
-
-    const products = [...decor, ...wom, ...man, ...tools];
+    const products = await ProductModel.find({}).lean();
 
     return NextResponse.json({
       success: true,
@@ -36,29 +28,7 @@ export async function POST(request) {
     await connectDB();
     const body = await request.json();
 
-    let TargetModel;
-
-    switch (body.maincategory) {
-      case "Декоративна косметика":
-        TargetModel = ProductDecor;
-        break;
-      case "Жіноча доглядова косметика":
-        TargetModel = ProductWom;
-        break;
-      case "Чоловіча доглядова косметика":
-        TargetModel = ProductMan;
-        break;
-      case "Інструменти для догляду":
-        TargetModel = ProductTools;
-        break;
-      default:
-        return NextResponse.json(
-          { error: "Невідома категорія" },
-          { status: 400 },
-        );
-    }
-
-    const product = await TargetModel.create(body);
+    const product = await ProductModel.create(body);
     return NextResponse.json({ success: true, product }, { status: 201 });
   } catch (error) {
     console.log(error);

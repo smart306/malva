@@ -1,8 +1,8 @@
-import Background from "@/components/background";
 import ProductP from "@/components/product";
-import Models from "@/lib/models/products"; 
-const { ProductDecor, ProductWom, ProductMan, ProductTools } = Models; 
+import ProductModel from "@/lib/models/products";
 import { connectDB } from "@/lib/mongoose";
+import mongoose from "mongoose";
+import { notFound } from "next/navigation";
 
 export default async function ProductPage({ params }) {
   await connectDB();
@@ -10,40 +10,41 @@ export default async function ProductPage({ params }) {
   const resolvedParams = await params;
   const { id } = resolvedParams;
 
-  const product =
-    (await ProductDecor.findById(id).lean()) ||
-    (await ProductWom.findById(id).lean()) ||
-    (await ProductMan.findById(id).lean()) ||
-    (await ProductTools.findById(id).lean());
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    notFound();
+  }
+
+  const product = await ProductModel.findById(id).lean();
 
   if (!product) {
-    return <div>Товар не знайдено</div>;
+    notFound();
   }
+
   const safeProduct = {
     ...product,
     _id: product._id.toString(),
+    createdAt: product.createdAt?.toISOString(),
+    updatedAt: product.updatedAt?.toISOString(),
   };
 
- const [decor, wom, man, tools] = await Promise.all([
-    ProductDecor.find({}).lean(),
-    ProductWom.find({}).lean(),
-    ProductMan.find({}).lean(),
-    ProductTools.find({}).lean(),
-  ]);
+  const similarProductsRaw = await ProductModel.find({
+    _id: { $ne: product._id },
+    productType: product.productType,
+  })
+    .sort({ createdAt: -1 })
+    .limit(12)
+    .lean();
 
-  const allProductsRaw = [...decor, ...wom, ...man, ...tools];
-  
-    const products = allProductsRaw.map((p) => ({
-      ...p,
-      _id: p._id.toString(),
-      createdAt: p.createdAt?.toISOString(),
-      updatedAt: p.updatedAt?.toISOString(),
-    }));
-  
+  const products = similarProductsRaw.map((p) => ({
+    ...p,
+    _id: p._id.toString(),
+    createdAt: p.createdAt?.toISOString(),
+    updatedAt: p.updatedAt?.toISOString(),
+  }));
+
   return (
     <div>
-      <Background />
-      <ProductP data={safeProduct} productssim={products}/>
+      <ProductP data={safeProduct} productssim={products} />
     </div>
   );
 }

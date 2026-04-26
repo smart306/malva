@@ -5,36 +5,29 @@ import NewProduct from "@/components/main/newest";
 import PopularProduct from "@/components/main/popularp";
 import Subscribe from "@/components/main/subscribe";
 import { connectDB } from "@/lib/mongoose";
-import Models from "@/lib/models/products"; 
-const { ProductDecor, ProductWom, ProductMan, ProductTools } = Models; 
+import ProductModel from "@/lib/models/products";
 export default async function Home() {
-  await connectDB()
-  
-  const [decor, wom, man, tools] = await Promise.all([
-    ProductDecor.find({}).lean(),
-    ProductWom.find({}).lean(),
-    ProductMan.find({}).lean(),
-    ProductTools.find({}).lean(),
+  await connectDB();
+
+  const [productsRaw] = await Promise.all([
+    ProductModel.find({}).sort({ createdAt: -1 }).lean(),
   ]);
-
-  const allProductsRaw = [...decor, ...wom, ...man, ...tools];
-
-  const product = allProductsRaw.map((p) => ({
+   const products = productsRaw.map((p) => ({
     ...p,
     _id: p._id.toString(),
     createdAt: p.createdAt?.toISOString(),
     updatedAt: p.updatedAt?.toISOString(),
   }));
-
+  
   return (
     <div>
       <Header />
       <Brands />
       <div>
-        <ButtonCategoryMain/>
-        <NewProduct data={product}/>
-        <PopularProduct data={product}/>
-        <Subscribe/>
+        <ButtonCategoryMain />
+        <NewProduct data={products} />
+        <PopularProduct data={products} />
+        <Subscribe />
       </div>
       <Brands />
     </div>

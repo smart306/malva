@@ -12,6 +12,13 @@ const MAIN_CATEGORIES = [
   "Інструменти для догляду",
 ];
 
+const MAIN_CATEGORY_TO_TYPE = {
+  "Декоративна косметика": "decor",
+  "Жіноча доглядова косметика": "women",
+  "Чоловіча доглядова косметика": "men",
+  "Інструменти для догляду": "tools",
+};
+
 function parseLines(value) {
   return value
     .split("\n")
@@ -67,7 +74,9 @@ export default function ProductForm() {
   }, [formData.maincategory]);
 
   const categoriesForCurrentMain = useMemo(() => {
-    return categories.filter((item) => item.maincategory === formData.maincategory);
+    return categories.filter(
+      (item) => item.maincategory === formData.maincategory,
+    );
   }, [categories, formData.maincategory]);
 
   useEffect(() => {
@@ -158,7 +167,11 @@ export default function ProductForm() {
     event.preventDefault();
     setStatus("");
 
-    if (!formData.title.trim() || !formData.description.trim() || !formData.brand.trim()) {
+    if (
+      !formData.title.trim() ||
+      !formData.description.trim() ||
+      !formData.brand.trim()
+    ) {
       setStatus("Заповніть title, description, brand");
       return;
     }
@@ -180,8 +193,13 @@ export default function ProductForm() {
       return;
     }
 
-    if (!singleSubcategory && (!formData.subcategory1.trim() || !formData.subcategory2.trim())) {
-      setStatus("Для цієї категорії потрібні поля subcategory1 та subcategory2");
+    if (
+      !singleSubcategory &&
+      (!formData.subcategory1.trim() || !formData.subcategory2.trim())
+    ) {
+      setStatus(
+        "Для цієї категорії потрібні поля subcategory1 та subcategory2",
+      );
       return;
     }
 
@@ -202,7 +220,12 @@ export default function ProductForm() {
       color,
     }));
 
+    const subcategories = singleSubcategory
+      ? [formData.subcategory].filter(Boolean)
+      : [formData.subcategory1, formData.subcategory2].filter(Boolean);
+
     const payload = {
+      productType: MAIN_CATEGORY_TO_TYPE[formData.maincategory],
       title: formData.title,
       description: formData.description,
       ratingFull: Number(formData.ratingFull),
@@ -210,19 +233,14 @@ export default function ProductForm() {
       price: Number(formData.price),
       brand: formData.brand,
       maincategory: formData.maincategory,
+      subcategories,
       images,
       info,
       reviews,
     };
 
-    if (singleSubcategory) {
-      payload.subcategory = formData.subcategory;
-      if (formData.maincategory === "Декоративна косметика") {
-        payload.colors = colors;
-      }
-    } else {
-      payload.subcategory1 = formData.subcategory1;
-      payload.subcategory2 = formData.subcategory2;
+    if (formData.maincategory === "Декоративна косметика") {
+      payload.colors = colors;
     }
 
     try {
@@ -237,7 +255,9 @@ export default function ProductForm() {
 
       const data = await response.json();
       if (!response.ok || !data.success) {
-        throw new Error(data.message || data.error || "Не вдалося створити продукт");
+        throw new Error(
+          data.message || data.error || "Не вдалося створити продукт",
+        );
       }
 
       setStatus("Продукт успішно створено");
@@ -354,7 +374,9 @@ export default function ProductForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="saved-category">Вибрати зі збережених категорій (необов'язково)</Label>
+        <Label htmlFor="saved-category">
+          Вибрати зі збережених категорій (необов'язково)
+        </Label>
         <select
           id="saved-category"
           value={selectedCategoryId}
@@ -392,7 +414,9 @@ export default function ProductForm() {
             <Input
               id="product-subcategory1"
               value={formData.subcategory1}
-              onChange={(event) => updateField("subcategory1", event.target.value)}
+              onChange={(event) =>
+                updateField("subcategory1", event.target.value)
+              }
             />
           </div>
 
@@ -401,14 +425,18 @@ export default function ProductForm() {
             <Input
               id="product-subcategory2"
               value={formData.subcategory2}
-              onChange={(event) => updateField("subcategory2", event.target.value)}
+              onChange={(event) =>
+                updateField("subcategory2", event.target.value)
+              }
             />
           </div>
         </div>
       )}
 
       <div className="space-y-2">
-        <Label htmlFor="product-images-upload">Завантажити зображення у Blob</Label>
+        <Label htmlFor="product-images-upload">
+          Завантажити зображення у Blob
+        </Label>
         <Input
           id="product-images-upload"
           type="file"
@@ -426,9 +454,16 @@ export default function ProductForm() {
             <p className="text-sm">Завантажені зображення:</p>
             <div className="space-y-2">
               {uploadedImages.map((url) => (
-                <div key={url} className="flex items-center justify-between gap-3">
+                <div
+                  key={url}
+                  className="flex items-center justify-between gap-3"
+                >
                   <p className="truncate text-xs">{url}</p>
-                  <Button type="button" variant="secondary" onClick={() => removeUploadedImage(url)}>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={() => removeUploadedImage(url)}
+                  >
                     Видалити
                   </Button>
                 </div>
@@ -439,7 +474,9 @@ export default function ProductForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="product-images">Або вставте URL зображень (кожен з нового рядка)</Label>
+        <Label htmlFor="product-images">
+          Або вставте URL зображень (кожен з нового рядка)
+        </Label>
         <textarea
           id="product-images"
           value={formData.imagesText}
@@ -462,7 +499,9 @@ export default function ProductForm() {
 
       {formData.maincategory === "Декоративна косметика" ? (
         <div className="space-y-2">
-          <Label htmlFor="product-colors">Colors (кожен клас кольору з нового рядка)</Label>
+          <Label htmlFor="product-colors">
+            Colors (кожен клас кольору з нового рядка)
+          </Label>
           <textarea
             id="product-colors"
             value={formData.colorsText}
@@ -474,7 +513,9 @@ export default function ProductForm() {
       ) : null}
 
       <div className="space-y-2">
-        <Label htmlFor="product-reviews">Reviews (формат рядка: Ім'я|Відгук)</Label>
+        <Label htmlFor="product-reviews">
+          Reviews (формат рядка: Ім'я|Відгук)
+        </Label>
         <textarea
           id="product-reviews"
           value={formData.reviewsText}
