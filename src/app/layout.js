@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/nav";
 import Footer from "@/components/footer/footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { GoogleTagManager } from '@next/third-parties/google'; 
 
 const geistPrimary = Brygada_1918({
   variable: "--font-brygada-1918",
@@ -27,11 +28,14 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistPrimary.variable} ${geistSecondary.variable} antialiased`}
       >
-        <TooltipProvider><div>
+        <GoogleTagManager gtmId="GTM-TZ44KH95" />
+        <TooltipProvider>
+          <div>
             <Navbar />
             {children}
             <Footer />
-          </div></TooltipProvider>
+          </div>
+        </TooltipProvider>
       </body>
     </html>
   );
