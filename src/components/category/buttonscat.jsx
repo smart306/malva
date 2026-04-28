@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { useRouter, useParams } from "next/navigation";
 import { ToolTipPages } from "../toolt/tooltip";
+import { cn } from "@/lib/utils";
 const data = [
   {
     id: 1,
@@ -32,7 +33,7 @@ const data = [
 export default function CategoryButton() {
     const router = useRouter();
     const params = useParams();
-    const currentSlug = params.slug;
+    const currentSlug = params.slug || [];
     return (
       <div className="lg:mt-30">
         {data
@@ -69,7 +70,12 @@ export default function CategoryButton() {
               </div>
             </div>
           ))}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
+        <div
+          className={cn(
+            "grid grid-cols-1 gap-4 px-4",
+            currentSlug.length === 0 ? "md:grid-cols-4" : "md:grid-cols-3",
+          )}
+        >
           {data
             .filter((item) => item.slug !== currentSlug)
             .map((item) => (

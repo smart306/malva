@@ -127,7 +127,7 @@ export default function Filter({
                               isActive
                                 ? "border-secondary ring-2 ring-secondary"
                                 : "border-white/40"
-                            } ${color.toLowerCase()}`}
+                            } ${color}`}
                            
                           />
                         </ToolTipButtons>

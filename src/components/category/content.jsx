@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import Background from "../background";
 import CardProduct from "./cardpro";
 import { ToolTipButtons } from "../toolt/tooltip";
+import { cn } from "@/lib/utils";
 
 const normalizeRange = (nextMin, nextMax, minBound, maxBound) => {
   const lowBound = Math.min(minBound, maxBound);
@@ -29,6 +30,10 @@ export default function ContentCategory({
   colors,
   currentCategory,
 }) {
+  const [visibleCount, setVisibleCount] = useState(8);
+  const loadMore = () => {
+    setVisibleCount((prev) => prev + 8);
+  };
   const computedMinBound = useMemo(() => {
     if (typeof minBound === "number") {
       return minBound;
@@ -233,19 +238,27 @@ export default function ContentCategory({
           />
           <div className="flex-1">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
-              {filteredData.map((item) => (
+              {filteredData.slice(0, visibleCount).map((item) => (
                 <CardProduct key={item._id} item={item} />
               ))}
             </div>
-            <div className="w-full flex justify-center p-4">
+            {filteredData.length > visibleCount && (
+            <div
+              className={cn(
+                data.length > 8
+                  ? "w-full flex justify-center p-4"
+                  : "hidden",
+              )}
+            >
               <ToolTipButtons text="Більше товарів">
-                <Button className="px-4 py-2 flex justify-center items-center text-center rounded-full w-full md:w-fit">
-                  <p className="h3 font-secondary text-center items-center ">
+                <Button className="px-4 py-2 flex justify-center items-center text-center rounded-full w-full md:w-fit" onClick={loadMore}>
+                  <p className="h3 font-secondary text-center items-center " >
                     Більше
                   </p>
                 </Button>
               </ToolTipButtons>
             </div>
+            )}
           </div>
         </SidebarProvider>
       </div>

@@ -1,6 +1,7 @@
 "use client"
 import Image from "next/image";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export default function Header(){
     return (
@@ -59,7 +60,11 @@ export default function Header(){
                   світу
                 </p>
               </div>
-              <Button className="py-2 px-4 text-2xl rounded-full">Асортимент</Button>
+              <Link href="/catalog">
+                <Button className="py-2 px-4 text-2xl rounded-full">
+                  Асортимент
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
