@@ -14,7 +14,6 @@ export default function SearchInput() {
 
   const wrapperRef = useRef(null);
 
-  // доступність
   useEffect(() => {
     const onClickOutside = (e) => {
       if (!wrapperRef.current?.contains(e.target)) {

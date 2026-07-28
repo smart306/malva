@@ -12,7 +12,8 @@ export default async function Home() {
   const [productsRaw] = await Promise.all([
     ProductModel.find({}).sort({ createdAt: -1 }).lean(),
   ]);
-   const products = productsRaw.map((p) => ({
+
+  const products = productsRaw.map((p) => ({
     ...p,
     _id: p._id.toString(),
     createdAt: p.createdAt?.toISOString(),

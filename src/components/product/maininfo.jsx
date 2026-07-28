@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { Star, StarHalf } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { addToCart } from "@/lib/cart/cart";
+import { toast } from "sonner";
 
 export default function MainInfo({ datamain }) {
   const images = Array.isArray(datamain.images)
@@ -17,8 +18,9 @@ export default function MainInfo({ datamain }) {
     e.stopPropagation();
 
     addToCart(datamain);
-
+    toast("Продукт додано до кошика.");
     const event = new Event("cartUpdated");
+   
     window.dispatchEvent(event);
   };
 

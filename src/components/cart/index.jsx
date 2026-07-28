@@ -24,16 +24,43 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import Checkout from "../checkout";
+import { useRecentlyViewed } from "@/hooks/recentlyViewed";
 
-export default function Cart({ data }) {
+export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
+  const { productIds } = useRecentlyViewed();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const refreshCart = useCallback(() => {
     const items = getCart();
     setCartItems(items || []);
     setTotal(getCartTotal() || 0);
   }, []);
+
+  useEffect(() => {
+    if (!productIds || productIds.length === 0) return;
+
+    async function fetchProducts() {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/products/batch", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ids: productIds }),
+        });
+        const data = await res.json();
+        setProducts(data);
+      } catch (err) {
+        console.error("Error fetching recently viewed products:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProducts();
+  }, [productIds]);
 
   useEffect(() => {
     refreshCart();
@@ -126,10 +153,10 @@ export default function Cart({ data }) {
               </div>
             </div>
             <div className="p-4">
-              <h1 className="h1 text-white text-center p-4">Замовити знову</h1>
+              <h1 className="h1 text-white text-center p-4">Ви переглядали</h1>
               <Carousel opts={{ align: "start" }} className="w-full">
                 <CarouselContent>
-                  {data.map((item) => (
+                  {products.map((item) => (
                     <CarouselItem
                       key={item._id}
                       className="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 h-full"
@@ -325,10 +352,10 @@ export default function Cart({ data }) {
               </div>
             </div>
             <div className="p-4">
-              <h1 className="h1 text-white text-center p-4">Замовити знову</h1>
+              <h1 className="h1 text-white text-center p-4">Ви переглядали</h1>
               <Carousel opts={{ align: "start" }} className="w-full">
                 <CarouselContent>
-                  {data.map((item) => (
+                  {products.map((item) => (
                     <CarouselItem
                       key={item._id}
                       className="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 h-full"

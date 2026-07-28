@@ -4,7 +4,7 @@ import Navbar from "@/components/nav";
 import Footer from "@/components/footer/footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { GoogleTagManager } from '@next/third-parties/google'; 
-
+import { Toaster } from "@/components/ui/sonner"; 
 const geistPrimary = Brygada_1918({
   variable: "--font-brygada-1918",
   subsets: ["latin"],
@@ -33,6 +33,7 @@ export default function RootLayout({ children }) {
           <div>
             <Navbar />
             {children}
+            <Toaster />
             <Footer />
           </div>
         </TooltipProvider>

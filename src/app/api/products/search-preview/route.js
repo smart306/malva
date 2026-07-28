@@ -1,7 +1,7 @@
 import { connectDB } from "@/lib/mongoose";
 import { NextResponse } from "next/server";
-import Models from "@/lib/models/products";
-const { ProductDecor, ProductWom, ProductMan, ProductTools } = Models;
+import ProductModel from "@/lib/models/products";
+
 export async function GET(request) {
   try {
     await connectDB();
@@ -17,18 +17,13 @@ export async function GET(request) {
     const query = { title: { $regex: escaped, $options: "i" } };
     const projection = "_id id title price images";
 
-    const [decor, wom, man, tools] = await Promise.all([
-      ProductDecor.find(query).select(projection).limit(6).lean(),
-      ProductWom.find(query).select(projection).limit(6).lean(),
-      ProductMan.find(query).select(projection).limit(6).lean(),
-      ProductTools.find(query).select(projection).limit(6).lean(),
-    ]);
-
-    const allResults = [...decor, ...wom, ...man, ...tools].slice(0, 6);
+   const allResults = await ProductModel.find(query)
+    .select(projection)
+    .limit(6)
+    .lean();
 
     const products = allResults.map((p) => ({
       _id: String(p._id),
-      id: p.id,
       title: p.title || "",
       price: p.price || 0,
       image: Array.isArray(p.images) ? p.images[0] : null,

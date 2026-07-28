@@ -5,7 +5,6 @@ import {
   NavigationMenuItem,
   NavigationMenuList,
 } from "../ui/navigation-menu";
-import { Input } from "../ui/input";
 import {
   AlignJustify,
   Heart,
@@ -28,17 +27,13 @@ import TopBar from "./topbar";
 import Link from "next/link";
 import { ToolTipPages } from "../toolt/tooltip";
 import SearchInput from "../search";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 
 const data = [
   {
-    title: "Пошук",
-    image: <Search width={24} height={24} />,
-    link: "/",
-  },
-  {
     title: "Акаунт",
     image: <UserRound width={24} height={24} />,
-    link: "/",
+    link: "/profile",
   },
   {
     title: "Кошик",
@@ -64,7 +59,7 @@ export default function Lowbar() {
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem className="max-w-200 w-full flex gap-2 cursor-pointer my-transition">
-                <SearchInput/>
+                <SearchInput />
               </NavigationMenuItem>
             </div>
             <div className="flex gap-2">
@@ -94,11 +89,11 @@ export default function Lowbar() {
                   size={"ghostsize"}
                   className="w-fit h-full"
                 >
-                    <AlignJustify
-                      className="text-primary-foreground cursor-pointer"
-                      width={40}
-                      height={40}
-                    />
+                  <AlignJustify
+                    className="text-primary-foreground cursor-pointer"
+                    width={40}
+                    height={40}
+                  />
                 </Button>
               </SheetTrigger>
               <SheetContent
@@ -113,15 +108,38 @@ export default function Lowbar() {
                 </SheetHeader>
                 <Separator className="bg-secondary border-2 border-secondary rounded-full" />
                 <div className="flex flex-col gap-2 py-2">
+                  <div className="flex flex-row justify-end items-center gap-2 px-4 py-2">
+                    <Collapsible>
+                      <CollapsibleTrigger>
+                        <Button asChild variant="ghost">
+                          <div className="flex flex-row justify-end items-center gap-2">
+                            <h3 className="h3">Пошук</h3>
+                            <div className="w-2 h-2">
+                              <Search width={24} height={24} />
+                            </div>
+                          </div>
+                        </Button>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <SearchInput />
+                      </CollapsibleContent>
+                    </Collapsible>
+                  </div>
                   {data.map((item) => (
                     <div
                       key={item.title}
                       className="flex flex-row justify-end items-center gap-2 px-4 py-2"
                     >
-                      <Button variant="ghost">
-                        <h3 className="h3">{item.title}</h3>
-                        <div className="w-2 h-2">{item.image}</div>
-                      </Button>
+                      <Link href={item.link}>
+                        <SheetClose>
+                          <Button asChild variant="ghost">
+                            <div>
+                              <h3 className="h3">{item.title}</h3>
+                              <div className="w-2 h-2">{item.image}</div>
+                            </div>
+                          </Button>
+                        </SheetClose>
+                      </Link>
                     </div>
                   ))}
                 </div>

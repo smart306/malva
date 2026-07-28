@@ -34,13 +34,26 @@ const UserSchema = new mongoose.Schema(
 
     role: {
       type: String,
+      enum: ["admin", "user"],
       default: "user",
     },
+    wishlist: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
+    pastorders: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Order",
+      },
+    ],
   },
   {
     timestamps: true,
-  }
-)
+  },
+);
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema)
 

@@ -5,6 +5,7 @@ import { ShoppingBasket, Star, StarHalf } from "lucide-react";
 import { Button } from "../ui/button";
 import { addToCart } from "@/lib/cart/cart";
 import { ToolTipButtons } from "../toolt/tooltip";
+import { toast } from "sonner";
 
 export default function CardProduct({item}){
     const handleSubmit = (e) => {
@@ -12,7 +13,7 @@ export default function CardProduct({item}){
       e.stopPropagation();
 
       addToCart(item);
-
+      toast("Продукт додано до кошика.");
       const event = new Event("cartUpdated");
       window.dispatchEvent(event);
     };
