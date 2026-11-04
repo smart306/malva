@@ -107,25 +107,19 @@ export default function SearchInput() {
                     }}
                 >
                   <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md aspect-square">
-                    {item.image ? (
                       <Image
-                        src={item.image}
+                        src={item.image.image}
                         alt={item.title}
                         fill
                         className="object-contain"
                       />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center text-xs text-muted-foreground">
-                        No image
-                      </div>
-                    )}
                   </div>
 
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{item.title}</p>
                     {typeof item.price === "number" && (
                       <p className="text-sm text-muted-foreground">
-                        {item.price.toLocaleString("uk-UA")} ₴
+                        {item.price}$
                       </p>
                     )}
                   </div>

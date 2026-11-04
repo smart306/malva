@@ -29,23 +29,6 @@ import { ToolTipPages } from "../toolt/tooltip";
 import SearchInput from "../search";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 
-const data = [
-  {
-    title: "Акаунт",
-    image: <UserRound width={24} height={24} />,
-    link: "/profile",
-  },
-  {
-    title: "Кошик",
-    image: <ShoppingBasket width={24} height={24} />,
-    link: "/cart",
-  },
-  {
-    title: "Вподобані",
-    image: <Heart width={24} height={24} />,
-    link: "/",
-  },
-];
 export default function Lowbar() {
   return (
     <NavigationMenu className="fixed w-full">
@@ -64,17 +47,33 @@ export default function Lowbar() {
             </div>
             <div className="flex gap-2">
               <div className="flex gap-2">
-                {data.map((item) => (
-                  <NavigationMenuItem key={item.title}>
-                    <Link href={item.link}>
-                      <ToolTipPages text={item.title}>
-                        <Button variant="ghost" className="relative">
-                          {item.image}
-                        </Button>
-                      </ToolTipPages>
-                    </Link>
-                  </NavigationMenuItem>
-                ))}
+                <NavigationMenuItem>
+                  <Link href="/profile">
+                    <ToolTipPages text="Профіль">
+                      <Button variant="ghost" className="relative">
+                        <UserRound width={24} height={24} />
+                      </Button>
+                    </ToolTipPages>
+                  </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Link href="/cart">
+                    <ToolTipPages text="Кошик">
+                      <Button variant="ghost" className="relative">
+                        <ShoppingBasket width={24} height={24} />
+                      </Button>
+                    </ToolTipPages>
+                  </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Link href="/profile/wishlist">
+                    <ToolTipPages text="Впродобані">
+                      <Button variant="ghost" className="relative">
+                        <Heart width={24} height={24} />
+                      </Button>
+                    </ToolTipPages>
+                  </Link>
+                </NavigationMenuItem>
               </div>
             </div>
           </NavigationMenuList>
@@ -125,23 +124,42 @@ export default function Lowbar() {
                       </CollapsibleContent>
                     </Collapsible>
                   </div>
-                  {data.map((item) => (
-                    <div
-                      key={item.title}
-                      className="flex flex-row justify-end items-center gap-2 px-4 py-2"
-                    >
-                      <Link href={item.link}>
-                        <SheetClose>
-                          <Button asChild variant="ghost">
-                            <div>
-                              <h3 className="h3">{item.title}</h3>
-                              <div className="w-2 h-2">{item.image}</div>
-                            </div>
-                          </Button>
-                        </SheetClose>
-                      </Link>
-                    </div>
-                  ))}
+                  <div className="flex flex-row justify-end items-center gap-2 px-4 py-2">
+                    <Link href="/profile">
+                      <SheetClose>
+                        <Button asChild variant="ghost">
+                          <div>
+                            <h3 className="h3">Аккаунт</h3>
+                            <UserRound width={24} height={24} />
+                          </div>
+                        </Button>
+                      </SheetClose>
+                    </Link>
+                  </div>
+                  <div className="flex flex-row justify-end items-center gap-2 px-4 py-2">
+                    <Link href="/cart">
+                      <SheetClose>
+                        <Button asChild variant="ghost">
+                          <div>
+                            <h3 className="h3">Кошик</h3>
+                            <ShoppingBasket width={24} height={24} />
+                          </div>
+                        </Button>
+                      </SheetClose>
+                    </Link>
+                  </div>
+                  <div className="flex flex-row justify-end items-center gap-2 px-4 py-2">
+                    <Link href="/profile/wishlist">
+                      <SheetClose>
+                        <Button asChild variant="ghost">
+                          <div>
+                            <h3 className="h3">Вподобані</h3>
+                            <Heart width={24} height={24} />
+                          </div>
+                        </Button>
+                      </SheetClose>
+                    </Link>
+                  </div>
                 </div>
                 <Separator className="bg-secondary border-2 border-secondary rounded-full" />
                 <TopBar />

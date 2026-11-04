@@ -1,17 +1,25 @@
+
 const CARTKEY = "cart";
 
 function normalizeCartItem(item) {
-  const productId = String(item?._id || item?.id || "");
+  const productId = String(item._id);
   if (!productId) {
+    return null;
+  }
+  const quantity = Number(item.quantity);
+  if (quantity <= 0) {
     return null;
   }
 
   return {
     _id: productId,
-    title: item?.title || "Без назви",
-    price: Number(item?.price) || 0,
-    image: typeof item?.image === "string" ? item.image : "",
-    quantity: Math.max(1, Number(item?.quantity) || 1),
+    title: item.title,
+    maincategory: item.maincategory,
+    price: Number(item.price),
+    image: item.image,
+    color: item.color || null,
+    quantity: Math.max(1, quantity),
+    stock: Number(item.stock),
   };
 }
 
@@ -36,26 +44,39 @@ export function saveCart(cart) {
   localStorage.setItem(CARTKEY, JSON.stringify(cart));
 }
 
-export function addToCart(product) {
+export function addToCart(product, color) {
   const cart = getCart();
 
-  const productId = String(product._id || product.id || "");
-  if (!productId) {
-    return cart;
-  }
+  const productId = String(product._id);
+  if (!productId) return cart;
 
-  const exitingProduct = cart.find((item) => item._id === productId);
+  const existingProduct = cart.find((item) => item._id === productId);
 
-  if (exitingProduct) {
-    exitingProduct.quantity += 1;
+  if (existingProduct) {
+    existingProduct.quantity += 1;
   } else {
-    cart.push({
-      _id: productId,
-      title: product.title,
-      price: product.price,
-      image: product.images?.[0] || product.images?.[1] || "",
-      quantity: 1,
-    });
+    if (color) {
+      cart.push({
+        _id: productId,
+        title: product.title,
+        maincategory: product.maincategory,
+        price: product.price,
+        image: product.images[0].image,
+        color: color,
+        quantity: 1,
+        stock: product.quantity,
+      });
+    } else {
+      cart.push({
+        _id: productId,
+        title: product.title,
+        maincategory: product.maincategory,
+        price: product.price,
+        image: product.images[0].image,
+        quantity: 1,
+        stock: product.quantity,
+      });
+    }
   }
   saveCart(cart);
   return cart;
@@ -69,15 +90,22 @@ export function removeCart(productId) {
   return cart;
 }
 
-export function changeCartQuantity(productId, delta = 1) {
+export function changeCartQuantity(productId, delta) {
   const normalizedId = String(productId);
   const cart = getCart()
     .map((item) => {
       if (item._id === normalizedId) {
-        return {
-          ...item,
-          quantity: item.quantity + delta,
-        };
+        if (item.maincategory === "decor") {
+          return {
+            ...item,
+            quantity: item.quantity + delta
+          };
+        } else {
+          return {
+            ...item,
+            quantity: item.quantity + delta
+          };
+        }
       }
       return item;
     })
@@ -93,5 +121,7 @@ export function clearCart() {
 
 export function getCartTotal() {
   const cart = getCart();
-  return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  return cart.reduce((total, item) => {
+    return total + (Number(item.price)) * (Number(item.quantity));
+  }, 0); 
 }

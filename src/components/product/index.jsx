@@ -1,13 +1,20 @@
-"use client"; 
+"use client";
+import { useEffect } from "react";
 import { useRecentlyViewed } from "@/hooks/recentlyViewed";
-import Background from "../background";
-import Brands from "../brands/brands";
+import SimilarProducts from "./similarproducts";
+import Reviews from "./reviews";
 import Information from "./information";
 import MainInfo from "./maininfo";
-import Reviews from "./reviews";
-import SimilarProducts from "./similarproducts";
-import { useEffect } from "react";
-export default function ProductP({data, productssim}){
+import Background from "../background";
+import Brands from "../brands/brands";
+
+export default function ProductP({
+  data,
+  productssim,
+  session,
+  dostavkasOptions,
+  userreviews,
+}) {
   const { addProduct } = useRecentlyViewed();
 
   useEffect(() => {
@@ -22,9 +29,14 @@ export default function ProductP({data, productssim}){
       </div>
       <div className="my-container">
         <div className="h-full">
-          <MainInfo datamain={data} />
+          <MainInfo datamain={data} dostavkasOptions={dostavkasOptions} />
           <Information datainfo={data.info} />
-          <Reviews datareview={data.reviews} />
+          <Reviews
+            productId={data._id}
+            datareview={data.reviews || []}
+            session={session}
+            reviews={userreviews}
+          />
           <SimilarProducts datasimilar={productssim} />
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoose";
-import Category, { MAIN_CATEGORIES } from "@/lib/models/categories";
+import Category from "@/lib/models/categories";
+import { auth } from "@/auth";
 
 export async function GET(request) {
   try {
@@ -33,26 +34,27 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    await connectDB();
-    const body = await request.json();
-
-    if (!MAIN_CATEGORIES.includes(body.maincategory)) {
+    await connectDB(); 
+    const session = await auth();
+   
+    if (!session?.user) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "Невідома головна категорія",
-        },
-        { status: 400 },
+        { success: false, message: "401 Unauthorized: Необхідно авторизуватися" },
+        { status: 401 }
       );
     }
+    const isAdmin =
+      session.user.role === "admin" || session.user.role === "admin-main";
 
-    const category = await Category.create({
-      name: body.name,
-      maincategory: body.maincategory,
-      subcategory: body.subcategory,
-      subcategory1: body.subcategory1,
-      subcategory2: body.subcategory2,
-    });
+   if (!isAdmin) {
+      return NextResponse.json(
+        { success: false, message: "403 Forbidden: Доступ заборонено" },
+        { status: 403 }
+      );
+    }
+    const body = await request.json();
+
+    const category = await Category.create(body);
 
     return NextResponse.json({ success: true, category }, { status: 201 });
   } catch (error) {

@@ -4,50 +4,24 @@ import { Button } from "../ui/button";
 import { useRouter, useParams } from "next/navigation";
 import { ToolTipPages } from "../toolt/tooltip";
 import { cn } from "@/lib/utils";
-const data = [
-  {
-    id: 1,
-    image: "/Дизайн без назви1(4).svg",
-    slug: "decorative",
-    title: "Декоративна косметика",
-  },
-  {
-    id: 2,
-    image: "/Дизайн без назви1(1).svg",
-    slug: "men",
-    title: "Чоловіча доглядова косметика",
-  },
-  {
-    id: 3,
-    image: "/Дизайн без назви1(2).svg",
-    slug: "women",
-    title: "Жіноча доглядова косметика",
-  },
-  {
-    id: 4,
-    image: "/Дизайн без назви1(3).svg",
-    slug: "tools",
-    title: "Інструменти для догляду",
-  },
-];
-export default function CategoryButton() {
+export default function CategoryButton({data}) {
     const router = useRouter();
     const params = useParams();
-    const currentSlug = params.slug || [];
+    const currentSlug = params.slug || null;
     return (
       <div className="lg:mt-30">
         {data
           .filter((item) => item.slug === currentSlug)
           .map((item) => (
             <div
-              key={item.id}
+              key={item._id}
               className="relative w-full aspect-[20/9] sm:aspect-[30/9] md:aspect-[40/9] lg:aspect-[60/9] overflow-hidden bg-primary mb-4"
             >
               <div className="flex justify-between h-full w-full">
                 <div className="relative w-1/2 h-full">
                   <Image
                     src={item.image}
-                    alt={item.title}
+                    alt="category"
                     fill
                     className="object-cover"
                   />
@@ -56,7 +30,7 @@ export default function CategoryButton() {
                 <div className="relative w-1/2 h-full">
                   <Image
                     src={item.image}
-                    alt={item.title}
+                    alt="category"
                     fill
                     className="object-cover rotate-180"
                   />
@@ -64,7 +38,7 @@ export default function CategoryButton() {
                 </div>
                 <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20">
                   <h1 className="text-white text-h1 font-primary">
-                    {item.title}
+                    {item.maincategory}
                   </h1>
                 </div>
               </div>
@@ -73,18 +47,18 @@ export default function CategoryButton() {
         <div
           className={cn(
             "grid grid-cols-1 gap-4 px-4",
-            currentSlug.length === 0 ? "md:grid-cols-4" : "md:grid-cols-3",
+            currentSlug === null ? "md:grid-cols-4" : "md:grid-cols-3",
           )}
         >
           {data
             .filter((item) => item.slug !== currentSlug)
             .map((item) => (
-              <ToolTipPages key={item.id} text={item.title}>
+              <ToolTipPages key={item._id} text={item.maincategory}>
                 <Button
                   asChild
-                  variant="category1"
+                  variant="category"
                   size="ghostsize"
-                  key={item.id}
+                  key={item._id}
                   className="w-full overflow-hidden"
                   onClick={() => router.push(`/catalog/${item.slug}`)}
                 >
@@ -92,7 +66,7 @@ export default function CategoryButton() {
                     <div className="">
                       <Image
                         src={item.image}
-                        alt={item.title}
+                        alt="category"
                         fill
                         className="object-cover my-transition group-hover:scale-105"
                       />
@@ -100,7 +74,7 @@ export default function CategoryButton() {
                     </div>
                     <div className="absolute inset-0 z-20 flex items-center w-full">
                       <p className="text-2xl p-6 flex flex-row justify-center text-center w-full text-white group-hover:text-primary text-wrap">
-                        {item.title}
+                        {item.maincategory}
                       </p>
                     </div>
                   </div>

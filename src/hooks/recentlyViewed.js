@@ -6,6 +6,7 @@ const MAX_ITEMS = 10;
 
 export function useRecentlyViewed() {
   const [productIds, setProductIds] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     try {
@@ -20,6 +21,28 @@ export function useRecentlyViewed() {
       console.error("Error loading recently viewed from localStorage:", err);
     }
   }, []);
+  useEffect(() => {
+    if (!productIds.length) {
+      setProducts([]);
+      return;
+    }
+    async function fetchProducts() {
+      try {
+        const res = await fetch("/api/products/batch", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ids: productIds }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setProducts(data);
+        }
+      } catch (err) {
+        console.error("Error fetching recently viewed products:", err);
+      }
+    }
+    fetchProducts();
+  }, [productIds]);
 
   const addProduct = useCallback((id) => {
     if (!id) return;
@@ -32,5 +55,5 @@ export function useRecentlyViewed() {
     });
   }, []);
 
-  return { productIds, addProduct };
+  return { productIds, products, addProduct };
 }

@@ -8,37 +8,8 @@ import {
 
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { ToolTipPages } from "../toolt/tooltip";
-const data = [
-  {
-    title: "Про нас",
-    href: "/about",
-  },
-  {
-    title: "Доставка та оплата",
-    href: "/delivery",
-  },
-  {
-    title: "Політика конфіденційності",
-    href: "/policy",
-  },
-  {
-    title: "Публічна оферта",
-    href: "/oferta",
-  },
-  {
-    title: "Гарантії та повернення",
-    href: "/return",
-  },
-  {
-    title: "Контактна інформація",
-    href: "/contact",
-  },
-  {
-    title: "Часті питання",
-    href: "/faq",
-  },
-];
-export default function TopBar() {
+
+export default function TopBar({data}) {
   return (
     <NavigationMenu className=" bg-primary w-full [&_div]:!w-full overflow-hidden max-lg:items-start px-4">
       <NavigationMenuList className="w-full! flex-col lg:flex-row gap-2 lg:gap-6 max-lg:py-4">
@@ -55,18 +26,18 @@ export default function TopBar() {
           <CarouselContent
             className={"flex max-lg:flex-col 2xl:justify-center"}
           >
-            {data.map((item, i) => (
+            {data.map((item) => (
               <CarouselItem
                 className={"lg:max-w-max"}
-                key={`${item.href}_${i}`}
+                key={item._id}
               >
                 <NavigationMenuItem className="py-2 px-2 cursor-pointer my-transition lg:text-center max-lg:w-full max-lg:text-end">
                   <Link
-                    href={item.href}
+                    href={`/regulation/${item.slug}`}
                     className="w-full navtext text-foreground hover:underline text-nowrap"
                   >
-                    <ToolTipPages text={item.title}>
-                      <span>{item.title}</span>
+                    <ToolTipPages text={item.name}>
+                      <span>{item.name}</span>
                     </ToolTipPages>
                   </Link>
                 </NavigationMenuItem>

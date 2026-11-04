@@ -1,9 +1,9 @@
-import CategoryForm from "@/components/admin/categoryform";
+import CategoriesTable from "@/components/admin/table/categoriestable";
 
-export default function AdminCategoryPage() {
-	return (
-		<div className="my-container pt-24 pb-12">
-			<CategoryForm />
-		</div>
-	);
+export default function AdminCategoriesPage() {
+    return (
+        <div className="my-container pt-24 pb-12">
+            <CategoriesTable/>
+        </div>
+    );
 }

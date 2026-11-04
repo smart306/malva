@@ -1,9 +1,27 @@
 import { NextResponse } from "next/server";
 import { put } from "@vercel/blob";
+import { auth } from "@/auth";
 
 export async function POST(request) {
   try {
     const token = process.env.BLOB_READ_WRITE_TOKEN;
+    const session = await auth();
+   
+    if (!session?.user) {
+      return NextResponse.json(
+        { success: false, message: "401 Unauthorized: Необхідно авторизуватися" },
+        { status: 401 }
+      );
+    }
+    const isAdmin =
+      session.user.role === "admin" || session.user.role === "admin-main";
+
+   if (!isAdmin) {
+      return NextResponse.json(
+        { success: false, message: "403 Forbidden: Доступ заборонено" },
+        { status: 403 }
+      );
+    }
     if (!token) {
       return NextResponse.json(
         {

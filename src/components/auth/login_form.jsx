@@ -58,9 +58,7 @@ export default function LoginForm() {
     <Card className="w-full max-w-md">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">Вхід</CardTitle>
-        <CardDescription>
-          Увійди через email або Google
-        </CardDescription>
+        <CardDescription>Увійди через email або Google</CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
@@ -87,11 +85,7 @@ export default function LoginForm() {
             />
           </div>
 
-          {error && (
-            <p className="text-sm text-red-500">
-              {error}
-            </p>
-          )}
+          {error && <p className="text-sm text-red-500">{error}</p>}
 
           <Button type="submit" className="w-full" disabled={isLoading}>
             {isLoading ? "Вхід..." : "Увійти"}
@@ -100,9 +94,7 @@ export default function LoginForm() {
 
         <div className="flex items-center gap-4">
           <Separator className="flex-1" />
-          <span className="text-xs text-muted-foreground">
-            або
-          </span>
+          <span className="text-xs text-muted-foreground">або</span>
           <Separator className="flex-1" />
         </div>
 
@@ -115,13 +107,16 @@ export default function LoginForm() {
           Продовжити з Google
         </Button>
 
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="font-primary text-secondary">
           Немає акаунту?{" "}
-          <Link href="/register" className="font-medium text-primary">
+          <Link
+            href="/register"
+            className="font-primary text-secondary underline"
+          >
             Зареєструватися
           </Link>
         </p>
       </CardContent>
     </Card>
-  )
+  );
 }

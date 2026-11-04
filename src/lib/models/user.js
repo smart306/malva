@@ -34,9 +34,31 @@ const UserSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["admin", "user"],
+      enum: ["admin-main", "admin", "user"],
       default: "user",
     },
+    points: {
+      type: Number,
+      default: 0,
+    },
+    pastreviews: [
+      {
+            product: {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: "Product",
+              required: true,
+            }, 
+            review: {
+              type: String,
+              required: true, 
+            },
+            star: {
+              type: Number, 
+              required: true, 
+              default: 0, 
+            }
+          },
+    ],
     wishlist: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -45,7 +67,7 @@ const UserSchema = new mongoose.Schema(
     ],
     pastorders: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId, 
         ref: "Order",
       },
     ],

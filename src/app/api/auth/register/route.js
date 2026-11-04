@@ -12,7 +12,8 @@ export async function POST(req) {
     const name = body.name?.trim()
     const email = body.email?.toLowerCase()?.trim()
     const password = body.password
-
+    const role = body.role || "user"
+    
     if (!name || !email || !password) {
       return NextResponse.json(
         { message: "Заповни всі поля" },
@@ -44,7 +45,7 @@ export async function POST(req) {
       passwordHash,
       provider: "credentials",
       image: null,
-      role: "user",
+      role,
     })
 
     return NextResponse.json(

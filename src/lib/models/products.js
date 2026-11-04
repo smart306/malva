@@ -2,50 +2,42 @@ import mongoose from "mongoose";
 
 const ProductInfoSchema = new mongoose.Schema(
   {
-    id: { type: Number, required: true },
     acoritem: { type: String, required: true, trim: true },
     content: { type: String, required: true, trim: true },
   },
-  { _id: false },
 );
+
+const ImagesSchema = new mongoose.Schema(
+  {
+    image: {type: String, trim: true, required: true}
+  }
+)
 
 const ProductColorSchema = new mongoose.Schema(
   {
-    id: { type: Number, required: true },
     color: { type: String, required: true, trim: true },
+    quantity: {type: Number, required: true, trim: true}
   },
-  { _id: false },
 );
 
 const ProductReviewSchema = new mongoose.Schema(
   {
-    id: { type: Number, required: true },
+    date: { type: Date, default: Date.now }, 
+    userId: { type: String }, 
     name: { type: String, required: true, trim: true },
     review: { type: String, required: true, trim: true },
+    star: {type: Number, required: true}
   },
-  { _id: false },
 );
 
 const ProductSchema = new mongoose.Schema(
   {
-    productType: {
-      type: String,
-      required: true,
-      enum: ["decor", "women", "men", "tools"],
-      index: true,
-    },
-
     title: { type: String, required: true, trim: true },
     description: { type: String, required: true, trim: true },
-
-    ratingFull: { type: Number, default: 0, min: 0, max: 5 },
-    ratingHalf: { type: Number, default: 0, enum: [0, 1] },
-
     price: { type: Number, required: true, min: 0, index: true },
     brand: { type: String, required: true, trim: true, index: true },
-
     maincategory: { type: String, required: true, trim: true, index: true },
-
+    rating: {type: Number, default: 0}, 
     subcategories: {
       type: [
         {
@@ -56,20 +48,12 @@ const ProductSchema = new mongoose.Schema(
       default: [],
     },
 
-    images: {
-      type: [
-        {
-          type: String,
-          trim: true,
-          required: true,
-        },
-      ],
-      default: [],
-    },
+    images: { type: [ImagesSchema], default: []},
 
     info: { type: [ProductInfoSchema], default: [] },
     colors: { type: [ProductColorSchema], default: [] },
     reviews: { type: [ProductReviewSchema], default: [] },
+    quantity: { type: Number, required: true}
   },
   { timestamps: true },
 );

@@ -8,7 +8,7 @@ export default function Information({datainfo}){
         <div className="p-4">
           <Accordion type="single" collapsible className="p-2">
             {datainfo.map((item) => (
-              <AccordionItem key={item.id} value={item.id.toString()} className={cn("border-b border-white p-2", item.id === 4 ? "border-none" : "")}>
+              <AccordionItem key={item._id} value={item._id.toString()} className={cn("border-b border-white p-2", item.id === 4 ? "border-none" : "")}>
                 <AccordionTrigger className="h3 text-white font-primary p-4">{item.acoritem}</AccordionTrigger>
                 <AccordionContent className="text-white font-primary p-4">{item.content}</AccordionContent>
               </AccordionItem>

@@ -18,6 +18,7 @@ import { ToolTipButtons } from "../toolt/tooltip";
 import { Label } from "../ui/label";
 import { Field, FieldGroup } from "../ui/field";
 import { Checkbox } from "../ui/checkbox";
+import { colorNames } from "@/lib/colornames";
 export default function Filter({
   minBound,
   maxBound,
@@ -114,21 +115,32 @@ export default function Filter({
                 <div className="grid grid-cols-6 gap-2 p-2">
                   {colors.length === 0 ? (
                     <p className="text-sm opacity-70 col-span-6">Кольори відсутні</p>
-                  ) : (
+                  ) : ( 
                     colors.map((color) => {
                       const isActive = selectedColors.includes(color);
+                      const matchedColor = colorNames.find(
+                        (col) => col.index === color,
+                      );
+                      console.log
+                      const colorDisplayName = matchedColor
+                        ? matchedColor.name
+                        : "";
                       return (
-                        <ToolTipButtons key={color} text={color}>
-                          <button
+                        <ToolTipButtons
+                          key={colorDisplayName}
+                          text={colorDisplayName}
+                        >
+                          <Button
                             type="button"
                             onClick={() => onToggleColor(color)}
                             aria-label={`Обрати колір ${color}`}
+                            style={{ backgroundColor: color }}
                             className={`h-7 w-7 rounded-full border transition ${
                               isActive
                                 ? "border-secondary ring-2 ring-secondary"
                                 : "border-white/40"
                             } ${color}`}
-                           
+                            
                           />
                         </ToolTipButtons>
                       );

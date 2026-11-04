@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 
@@ -10,53 +10,57 @@ import { Label } from "@/components/ui/label"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 
 export default function EditProfileForm({ user }) {
   const router = useRouter()
-
   const [error, setError] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
+  const [isUploading, setIsUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState(user.image || "")
   const [imageUrl, setImageUrl] = useState(user.image || "")
 
   async function handleImageChange(event) {
-    const file = event.target.files?.[0]
+    const file = event.target.files?.[0];
+    if (!file) return;
 
-    if (!file) return
+    setError("");
+    setIsUploading(true); 
 
-    setError("")
+    const localPreview = URL.createObjectURL(file);
+    setImagePreview(localPreview);
 
-    const localPreview = URL.createObjectURL(file)
-    setImagePreview(localPreview)
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
 
-    const formData = new FormData()
-    formData.append("file", file)
+      const res = await fetch("/api/upload-image/avatar", {
+        method: "POST",
+        body: formData,
+      });
 
-    const res = await fetch("/api/upload-image/avatar", {
-      method: "POST",
-      body: formData,
-    })
+      const data = await res.json();
 
-    const data = await res.json()
+      if (!res.ok) {
+        setError(data.message || "Не вдалося завантажити фото");
+        setImagePreview(user.image || ""); 
+        return;
+      }
 
-    if (!res.ok) {
-      setError(data.message || "Не вдалося завантажити фото")
-      return
+      setImageUrl(data.url);
+    } catch (err) {
+      setError("Помилка при завантаженні файлу");
+      setImagePreview(user.image || "");
+    } finally {
+      setIsUploading(false);
     }
-
-    setImageUrl(data.url)
   }
 
   async function handleSubmit(event) {
     event.preventDefault()
-
+if (isUploading) return;
     setError("")
-    setIsLoading(true)
-
     const formData = new FormData(event.currentTarget)
 
     const name = formData.get("name")
@@ -74,8 +78,6 @@ export default function EditProfileForm({ user }) {
 
     const data = await res.json()
 
-    setIsLoading(false)
-
     if (!res.ok) {
       setError(data.message || "Не вдалося оновити профіль")
       return
@@ -86,12 +88,9 @@ export default function EditProfileForm({ user }) {
   }
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className="w-full max-w-md font-primary">
       <CardHeader>
-        <CardTitle>Редагування профілю</CardTitle>
-        <CardDescription>
-          Онови імʼя та фото профілю
-        </CardDescription>
+        <CardTitle className="font-primary text-center h2">Редагування профілю</CardTitle>
       </CardHeader>
 
       <CardContent>
@@ -136,8 +135,8 @@ export default function EditProfileForm({ user }) {
             </p>
           )}
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Збереження..." : "Зберегти"}
+          <Button type="submit" className="w-full py-2 text-xl rounded-full">
+            Зберегти
           </Button>
         </form>
       </CardContent>

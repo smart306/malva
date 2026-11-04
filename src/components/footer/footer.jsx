@@ -1,40 +1,10 @@
 "use client"
-
 import { FacebookIcon, InstagramIcon, Mail, MapPinned, Phone } from "lucide-react";
 import Image from "next/image"
 import Link from "next/link";
 import { ToolTipPages } from "../toolt/tooltip";
-const data = [
-  {
-    title: "Про нас",
-    href: "/about",
-  },
-  {
-    title: "Доставка та оплата",
-    href: "/delivery",
-  },
-  {
-    title: "Політика конфіденційності",
-    href: "/policy",
-  },
-  {
-    title: "Публічна оферта",
-    href: "/oferta",
-  },
-  {
-    title: "Гарантії та повернення",
-    href: "/return",
-  },
-  {
-    title: "Контактна інформація",
-    href: "/contact",
-  },
-  {
-    title: "Часті питання",
-    href: "/faq",
-  },
-];
-export default function Footer(){
+
+export default function Footer({data}){
     return (
       <footer className="z-50 bg-primary border-b-2 border-t-2 border-border-nav">
         <div className="my-container">
@@ -89,14 +59,14 @@ export default function Footer(){
                 Корисні посилання
               </h1>
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 p-1">
-                {data.map((item, i) => (
+                {data.map((item) => (
                   <Link
-                    key={item.title}
-                    href={item.href}
+                    key={item._id}
+                    href={`/regulation/${item.slug}`}
                     className="w-full navtext text-foreground hover:underline text-nowrap"
                   >
-                    <ToolTipPages text={item.title}>
-                      <span>{item.title}</span>
+                    <ToolTipPages text={item.name}>
+                      <span>{item.name}</span>
                     </ToolTipPages>
                   </Link>
                 ))}

@@ -79,9 +79,7 @@ export default function RegisterForm() {
     <Card className="w-full max-w-md">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">Реєстрація</CardTitle>
-        <CardDescription>
-          Створи акаунт через email або Google
-        </CardDescription>
+        <CardDescription>Створи акаунт через email або Google</CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
@@ -120,11 +118,7 @@ export default function RegisterForm() {
             />
           </div>
 
-          {error && (
-            <p className="text-sm text-red-500">
-              {error}
-            </p>
-          )}
+          {error && <p className="text-sm text-red-500">{error}</p>}
 
           <Button type="submit" className="w-full" disabled={isLoading}>
             {isLoading ? "Створення..." : "Створити акаунт"}
@@ -133,9 +127,7 @@ export default function RegisterForm() {
 
         <div className="flex items-center gap-4">
           <Separator className="flex-1" />
-          <span className="text-xs text-muted-foreground">
-            або
-          </span>
+          <span className="text-xs text-muted-foreground">або</span>
           <Separator className="flex-1" />
         </div>
 
@@ -148,13 +140,13 @@ export default function RegisterForm() {
           Продовжити з Google
         </Button>
 
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-center text-sm text-secondary">
           Вже маєш акаунт?{" "}
-          <Link href="/login" className="font-medium text-primary">
+          <Link href="/login" className="font-primary text-secondary underline">
             Увійти
           </Link>
         </p>
       </CardContent>
     </Card>
-  )
+  );
 }

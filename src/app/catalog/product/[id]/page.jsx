@@ -1,10 +1,14 @@
+import { auth } from "@/auth";
 import ProductP from "@/components/product";
+import Dostavka from "@/lib/models/dostavka";
 import ProductModel from "@/lib/models/products";
+import User from "@/lib/models/user";
 import { connectDB } from "@/lib/mongoose";
 import mongoose from "mongoose";
 import { notFound } from "next/navigation";
 
 export default async function ProductPage({ params }) {
+  const session = await auth();
   await connectDB();
 
   const resolvedParams = await params;
@@ -13,6 +17,13 @@ export default async function ProductPage({ params }) {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     notFound();
   }
+  let userReviewsArray = [];
+  if (session?.user?.id) {
+    const user = await User.findById(session.user.id)
+      .select("pastreviews")
+      .lean();
+    userReviewsArray = JSON.parse(JSON.stringify(user.pastreviews));
+  }
 
   const product = await ProductModel.findById(id).lean();
 
@@ -20,31 +31,35 @@ export default async function ProductPage({ params }) {
     notFound();
   }
 
-  const safeProduct = {
-    ...product,
-    _id: product._id.toString(),
-    createdAt: product.createdAt?.toISOString(),
-    updatedAt: product.updatedAt?.toISOString(),
-  };
+  const safeProduct = JSON.parse(JSON.stringify(product));
 
   const similarProductsRaw = await ProductModel.find({
     _id: { $ne: product._id },
-    productType: product.productType,
+    maincategory: product.maincategory,
   })
     .sort({ createdAt: -1 })
     .limit(12)
     .lean();
 
-  const products = similarProductsRaw.map((p) => ({
-    ...p,
-    _id: p._id.toString(),
-    createdAt: p.createdAt?.toISOString(),
-    updatedAt: p.updatedAt?.toISOString(),
-  }));
+  const products = JSON.parse(JSON.stringify(similarProductsRaw));
+
+  let dostavkasOptions = [];
+  try {
+    const dostavkas = await Dostavka.find({}).lean();
+    dostavkasOptions = JSON.parse(JSON.stringify(dostavkas));
+  } catch (error) {
+    console.error("Помилка завантаження варіантів доставки:", error);
+  }
 
   return (
     <div>
-      <ProductP data={safeProduct} productssim={products} />
+      <ProductP
+        session={session}
+        data={safeProduct}
+        productssim={products}
+        dostavkasOptions={dostavkasOptions}
+        userreviews={userReviewsArray}
+      />
     </div>
   );
 }
